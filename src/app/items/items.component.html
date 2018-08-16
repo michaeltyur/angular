@@ -1,0 +1,7 @@
+
+  <ul class="list-group" >
+    <li class="list-group-item" *ngFor="let recip of listrecipes" (click)="setSelection($event)" id="{{recip.name}}">
+        <h5 >Recipe: {{recip.name}}</h5>
+        <p class="card-text">Description: {{recip.description}}</p>   
+    </li>
+  </ul>

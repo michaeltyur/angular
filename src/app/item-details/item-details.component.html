@@ -1,0 +1,16 @@
+
+
+<div class="card mycard">
+  <form>
+      <h5 class="card-header">Recipe: {{recipe.name}}</h5>
+    <div class="form-group">
+      <label for="formGroupExampleInput">Description</label>
+      <input type="text" class="form-control" id="formGroupExampleInput" placeholder="description" value="{{recipe.description}}" id="description">
+    </div>
+    <div class="form-group">
+      <label for="formGroupExampleInput2">Ingridients</label>
+      <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="ingridients" value="{{recipe.ingridients}}" id="ingridients">
+    </div>
+    <button type="submit" class="btn btn-primary mb-2">Update Recipe</button>
+  </form>
+</div>
