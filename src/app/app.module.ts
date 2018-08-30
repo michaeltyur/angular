@@ -1,31 +1,37 @@
-
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { BodyComponent } from './body/body.component';
+import {FormsModule} from '@angular/forms';
+import { HttpClientModule }    from '@angular/common/http';
+import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import { InMemoryDataService }  from './in-memory-data.service';
+
 import { ItemsComponent } from './items/items.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
-import { NewShoppingItemComponent } from './new-shopping-item/new-shopping-item.component';
-import { ShoppingItemsComponent } from './shopping-items/shopping-items.component';
-//import { LocalStorageModule } from '@ngx-pwa/local-storage';
+import { ShoplistComponent } from './shoplist/shoplist.component';
+import { AppRoutingModule } from './/app-routing.module';
+import { MessagesComponent } from './messages/messages.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    BodyComponent,
     ItemsComponent,
     ItemDetailsComponent,
-    NewShoppingItemComponent,
-    ShoppingItemsComponent
+    ShoplistComponent,
+    MessagesComponent
   ],
   imports: [
-    BrowserModule
-    //LocalStorageModule
+    BrowserModule,
+    FormsModule,
+    AppRoutingModule,
+    HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(
+      InMemoryDataService, { dataEncapsulation: false })
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent] 
 })
 export class AppModule {
 
