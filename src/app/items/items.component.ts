@@ -16,20 +16,24 @@ export class ItemsComponent implements OnInit {
   selectedRecipe : Recipe;
 
   constructor(private recipeService:RecipeService,private messageService: MessageService) { }
+
   ngOnInit() 
   {
     this.getRecipes();
   }
-  getRecipes():void{
+  getRecipes():void
+  {
     this.messageService.add('RecipeService: fetched recipe');
     this.recipeService.getListRecipes()
     .subscribe(recipes=>this.listrecipes=recipes);
   }
-  onSelect(recipe: Recipe): void {
+  onSelect(recipe: Recipe): void 
+  {
     this.selectedRecipe = recipe;
   }
- newRecipe():void{
-  this.selectedRecipe=new Recipe("","","");
- }
+  newRecipe():void
+  {
+    this.selectedRecipe=new Recipe("","","");
+  }
 
 }

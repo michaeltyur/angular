@@ -3,6 +3,7 @@ import{Location} from '@angular/common'
  
 import{Recipe} from'../shared/models/recipe.model';
 import{RecipeService} from '../recipe.service';
+import { MessageService } from '../message.service';
 
 
 
@@ -19,7 +20,8 @@ export class ItemDetailsComponent implements OnInit {
 
   constructor(
               private recipeService:RecipeService,
-              private location:Location
+              private location:Location,
+              private messageService: MessageService
             ) {
   }
   ngOnInit() 
@@ -32,12 +34,18 @@ export class ItemDetailsComponent implements OnInit {
   }
   
    updateRecipe(name:string, description:string,ingredients:string):void{
+     
+     this.messageService.add("Recipe "+this.recipe.name+" are updated");
+
     this.recipe.name=name;
     this.recipe.description=description;
     this.recipe.ingredients=ingredients;
+
+    this.recipeService.updateRecipe(this.recipe);
+
    }
    save(): void {
-    this.recipeService.updateHero(this.recipe)
+    this.recipeService.updateRecipe(this.recipe)
       .subscribe(() => this.goBack());
   }
    addNewRecipe():void{
@@ -46,5 +54,6 @@ export class ItemDetailsComponent implements OnInit {
    goBack():void{
      this.location.back();
    }
+
 }
 
