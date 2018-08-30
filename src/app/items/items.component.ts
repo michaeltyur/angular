@@ -1,39 +1,35 @@
 import { Component, OnInit } from '@angular/core';
-import {ListRecipe}  from '../shared/models/list.resipes';
 import { Recipe } from '../shared/models/recipe.model';
-import{ItemDetailsComponent} from'../item-details/item-details.component'
+import{RecipeService} from '../recipe.service'
+import { MessageService } from '../message.service';
 
 @Component({
   selector: 'app-items',
+  template: `{{recipedetails}}`,
   templateUrl: './items.component.html',
   styleUrls: ['./items.component.css']  
 })
 export class ItemsComponent implements OnInit {
 
   listrecipes:Recipe[];
-  name:string;
-  description:string;
-  recipedetails:Recipe;
+  
+  selectedRecipe : Recipe;
 
-  constructor() 
-  { 
-    this.listrecipes=new ListRecipe().list;
+  constructor(private recipeService:RecipeService,private messageService: MessageService) { }
+  ngOnInit() 
+  {
+    this.getRecipes();
   }
-  ngOnInit() {}
-  setSelection=function($event){     
-            var current = document.getElementsByClassName("active");
-            current[0].className = current[0].className.replace(" active", "");
-            $event.currentTarget.className += " active";   
-            localStorage.clear();
-            let key = $event.currentTarget.getAttribute("id");
-
-            let recipe=this.listrecipes.find(r=>r.name==key);
-
-            var description=document.getElementById("description");
-            description=this.recipedetails.description;
-           // this.recipedetails.name=this.recipedetails.recipe.name;
-           // this.recipedetails.description=this.recipedetails.recipe.description;
-           // this.recipedetails.ingridients=this.recipedetails.recipe.ingridients;
-      }
+  getRecipes():void{
+    this.messageService.add('RecipeService: fetched recipe');
+    this.recipeService.getListRecipes()
+    .subscribe(recipes=>this.listrecipes=recipes);
+  }
+  onSelect(recipe: Recipe): void {
+    this.selectedRecipe = recipe;
+  }
+ newRecipe():void{
+  this.selectedRecipe=new Recipe("","","");
+ }
 
 }

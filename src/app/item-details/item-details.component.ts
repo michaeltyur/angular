@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import{Recipe} from'../shared/models/recipe.model'
+import { Component, OnInit,Input } from '@angular/core';
+import{Location} from '@angular/common'
+ 
+import{Recipe} from'../shared/models/recipe.model';
+import{RecipeService} from '../recipe.service';
+
+
 
 
 @Component({
@@ -9,13 +14,37 @@ import{Recipe} from'../shared/models/recipe.model'
 })
 export class ItemDetailsComponent implements OnInit {
 
-  public recipe:Recipe;
-  
-  constructor() 
-  {
-    this.recipe=new Recipe('','','');
+  @Input() recipe:Recipe;
+  listrecipes:Recipe[];
+
+  constructor(
+              private recipeService:RecipeService,
+              private location:Location
+            ) {
   }
-   ngOnInit() {}
-   
+  ngOnInit() 
+  {
+    this.getRecipes();
+  }
+  getRecipes():void{
+    this.recipeService.getListRecipes()
+    .subscribe(recipes=>this.listrecipes=recipes);
+  }
+  
+   updateRecipe(name:string, description:string,ingredients:string):void{
+    this.recipe.name=name;
+    this.recipe.description=description;
+    this.recipe.ingredients=ingredients;
+   }
+   save(): void {
+    this.recipeService.updateHero(this.recipe)
+      .subscribe(() => this.goBack());
+  }
+   addNewRecipe():void{
+     this.listrecipes.push(this.recipe);
+   }
+   goBack():void{
+     this.location.back();
+   }
 }
 

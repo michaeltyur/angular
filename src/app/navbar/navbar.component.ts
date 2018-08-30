@@ -7,9 +7,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  current: string;
+  recipes: string;
+  shopList: string;
+
+  constructor() {
+    this.recipes = 'Recipes';
+    this.recipes = 'ShopList';
+
+  }
 
   ngOnInit() {
+  }
+  onSelect(selected: string): void {
+   this.current = selected;
   }
 
 }

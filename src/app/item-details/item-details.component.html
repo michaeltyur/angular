@@ -1,16 +1,20 @@
-
-
 <div class="card mycard">
-  <form>
-      <h5 class="card-header">Recipe: {{recipe.name}}</h5>
+  <form *ngIf="recipe" id="recipe-form">
+    <h5 class="card-header">Recipe</h5>
     <div class="form-group">
-      <label for="formGroupExampleInput">Description</label>
-      <input type="text" class="form-control" id="formGroupExampleInput" placeholder="description" value="{{recipe.description}}" id="description">
+        <label>Name</label>
+        <input  class="form-control" placeholder="name" value="{{recipe.name}}" type="text" #name>
+      </div>
+    <div class="form-group">
+      <label >Description</label>
+      <input  class="form-control" placeholder="description" value="{{recipe.description}}" type="text" #description>
     </div>
     <div class="form-group">
-      <label for="formGroupExampleInput2">Ingridients</label>
-      <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="ingridients" value="{{recipe.ingridients}}" id="ingridients">
+      <label>Ingridients</label>
+      <input class="form-control" placeholder="ingredients" value="{{recipe.ingredients}}" type="text" #ingridients>
     </div>
-    <button type="submit" class="btn btn-primary mb-2">Update Recipe</button>
+    <button type="submit" 
+            class="btn btn-primary mb-2" 
+            (click)="updateRecipe(name.value,description.value,ingredients.value)">Update Recipe</button>
   </form>
 </div>
