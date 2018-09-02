@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { Recipe } from '../shared/models/recipe.model';
 import{RecipeService} from '../recipe.service'
 import { MessageService } from '../message.service';
@@ -33,7 +34,7 @@ export class ItemsComponent implements OnInit {
   }
   newRecipe():void
   {
-    this.selectedRecipe=new Recipe("","","");
+    this.selectedRecipe=undefined;
   }
 
 }

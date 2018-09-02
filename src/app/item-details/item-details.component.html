@@ -1,20 +1,29 @@
 <div class="card mycard">
-  <form *ngIf="recipe" id="recipe-form">
+  <form  id="recipe-form">
     <h5 class="card-header">Recipe</h5>
     <div class="form-group">
-        <label>Name</label>
-        <input  class="form-control" placeholder="name" value="{{recipe.name}}" type="text" #name>
+      <label>Name</label>
+      <input class="form-control" placeholder="name" value="{{recipe?recipe.name:''}}" type="text" #name>
       </div>
     <div class="form-group">
-      <label >Description</label>
-      <input  class="form-control" placeholder="description" value="{{recipe.description}}" type="text" #description>
+      <label>Description</label>
+      <input class="form-control" placeholder="description" value="{{recipe?recipe.description:''}}" type="text" #description>
     </div>
     <div class="form-group">
       <label>Ingridients</label>
-      <input class="form-control" placeholder="ingredients" value="{{recipe.ingredients}}" type="text" #ingridients>
+      <input class="form-control" placeholder="ingredients" value="{{recipe?recipe.ingredients:''}}" type="text" #ingredients>
     </div>
-    <button type="submit" 
+    <button type="button" 
+            *ngIf="!recipe"
             class="btn btn-primary mb-2" 
-            (click)="updateRecipe(name.value,description.value,ingredients.value)">Update Recipe</button>
+            (click)="addNewRecipe(name.value,description.value,ingredients.value);name.value=''; description.value=''; ingredients.value=''">Add</button>
+    <button type="button" 
+            *ngIf="recipe"
+            class="btn btn-primary mb-2" 
+            (click)="updateRecipe(name.value,description.value,ingredients.value)">Update</button>
+    <button type="button" 
+            *ngIf="recipe"
+            class="btn btn-danger mb-2 ml-3" 
+            (click)="deleteRecipe()">Delete</button>
   </form>
 </div>

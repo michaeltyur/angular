@@ -1,10 +1,29 @@
 
 <div class="container">
-    <button type="button"
-            class="btn btn-success mt-5 mb-3"
-            id="new-recipe-button"
-           (click) ="newRecipe()">New Recipes</button>
-    <div class="row">
+  
+  <div class="row mt-5 mb-3">
+   
+    <div class="col col-lg-4">
+      <input  type="text"
+          class="form-control" 
+          placeholder="Name" 
+          value="{{selectedItem?selectedItem.name:''}}" 
+          #name>
+    </div>
+    <div class="col col-lg-2 pull-right">
+      <button type="button"
+          class="btn btn-success pull-right"
+          (click) ="newRecipe()">Find Recipes</button>
+    </div>   
+    <div class="col col-lg-6">
+        <button type="button"
+               class="btn btn-success pull-right"
+               id="new-recipe-button"
+              (click) ="newRecipe()">New Recipes</button>
+      </div>
+  </div>
+          
+  <div class="row">
       <div class="col">
           <ul class="list-group" >
             <h4 class="card-header border border-secondary rounded">Our recipes</h4>
@@ -19,7 +38,7 @@
           </ul>
       </div>
       <div class="col">
-         <app-item-details [recipe]="selectedRecipe"></app-item-details>
+         <app-item-details [recipe]="selectedRecipe" [(listrecipes)]="listrecipes"></app-item-details>
       </div>
     </div>
   </div>

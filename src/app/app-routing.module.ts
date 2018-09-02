@@ -4,6 +4,7 @@ import{ItemsComponent}from '../app/items/items.component'
 import {ShoplistComponent} from '../app/shoplist/shoplist.component'
 
 const routes:Routes=[
+    { path: '', redirectTo: '/recipes', pathMatch: 'full' },
     { path:'recipes',component:ItemsComponent },
     {path:'shopinglist',component:ShoplistComponent}
 ]

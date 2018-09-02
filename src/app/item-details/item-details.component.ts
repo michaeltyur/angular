@@ -1,4 +1,4 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit, Input, Output,EventEmitter, DoCheck } from '@angular/core';
 import{Location} from '@angular/common'
  
 import{Recipe} from'../shared/models/recipe.model';
@@ -16,7 +16,9 @@ import { MessageService } from '../message.service';
 export class ItemDetailsComponent implements OnInit {
 
   @Input() recipe:Recipe;
-  listrecipes:Recipe[];
+
+  @Input() listrecipes:Recipe[];
+  @Output() listrecipesChange: EventEmitter<Recipe[]> = new EventEmitter();
 
   constructor(
               private recipeService:RecipeService,
@@ -24,32 +26,54 @@ export class ItemDetailsComponent implements OnInit {
               private messageService: MessageService
             ) {
   }
-  ngOnInit() 
-  {
-    this.getRecipes();
-  }
-  getRecipes():void{
-    this.recipeService.getListRecipes()
-    .subscribe(recipes=>this.listrecipes=recipes);
-  }
+  ngOnInit() {}
   
-   updateRecipe(name:string, description:string,ingredients:string):void{
-     
-     this.messageService.add("Recipe "+this.recipe.name+" are updated");
-
-    this.recipe.name=name;
-    this.recipe.description=description;
-    this.recipe.ingredients=ingredients;
-
-    this.recipeService.updateRecipe(this.recipe);
-
-   }
-   save(): void {
-    this.recipeService.updateRecipe(this.recipe)
-      .subscribe(() => this.goBack());
+  listOfRecipesChanged() 
+  {
+    this.listrecipesChange.emit(this.listrecipes);
   }
-   addNewRecipe():void{
+
+  updateRecipe(name:string,description:string,ingredients:string):void{
+     
+     this.messageService.add("Recipe " + this.recipe.name + " are updated");
+
+     this.recipe.name=name;
+     this.recipe.description=description;
+     this.recipe.ingredients=ingredients;
+
+     this.recipeService.updateRecipe(this.recipe).subscribe();
+   }
+  //  save(): void {
+  //   this.recipeService.updateRecipe(this.recipe)
+  //     .subscribe(() => this.goBack());
+  // }
+  addNewRecipe(name:string, description:string,ingredients:string):void{
+    if(!name&&!description&&!ingredients)
+    {
+      this.messageService.add("The fields cannot be empty");
+      return;
+    }
+     this.recipe=new Recipe(name,description,ingredients);
+     this.recipeService.addRecipe(this.recipe).subscribe();
+
      this.listrecipes.push(this.recipe);
+     
+     this.listOfRecipesChanged();
+    
+     //this.messageService.add("Recipe " + this.recipe.name + " are added");
+
+     this.recipe=undefined;
+   }
+
+  deleteRecipe():void{
+
+     this.listrecipes = this.listrecipes.filter(r => r !== this.recipe);
+     this.recipeService.deleteRecipe(this.recipe).subscribe();
+     this.listOfRecipesChanged();
+     
+     //this.messageService.add("Recipe " + this.recipe.name + " are deleted");
+
+     this.recipe=undefined;
    }
    goBack():void{
      this.location.back();

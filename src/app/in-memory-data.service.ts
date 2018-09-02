@@ -8,6 +8,8 @@ export class InMemoryDataService implements InMemoryDbService {
       { id: 13, name: 'Spicy Garlic Lime Chicken',description:"A sweet and spicy marinated tenderloin, grilled to perfection",ingredients:"courgette,garlic cloves,crushed" },
       { id: 14, name: 'Cherry Cream Cheese Dump Cake',description:"This dessert is amazing! It uses coffee and chocolate, the best combination since chocolate and peanut butter",ingredients:"red onions,salt,pepper" },
       { id: 15, name: 'Waikiki-Style Meatballs',description:"Hatch chiles are New Mexico's gift to the world",ingredients:"crushed,balsamic vinegar" },
+      { id: 16, name: 'Wimbledon-inspired strawberry ice cream',description:"An easy and mega-quick summer pud",ingredients:"frozen strawberries,natural fat-free yoghurt" },
+      { id: 17, name: 'Watermelon granita',description:"WITH GINGER SYRUP, COOL NATURAL YOGHURT & MINT",ingredients:"watermelon,stem,limes" },
     ];
     return {recipes};
   }

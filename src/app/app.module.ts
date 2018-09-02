@@ -12,6 +12,7 @@ import { ItemDetailsComponent } from './item-details/item-details.component';
 import { ShoplistComponent } from './shoplist/shoplist.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { MessagesComponent } from './messages/messages.component';
+import { RecipeSearchComponent } from './recipe-search/recipe-search.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { MessagesComponent } from './messages/messages.component';
     ItemsComponent,
     ItemDetailsComponent,
     ShoplistComponent,
-    MessagesComponent
+    MessagesComponent,
+    RecipeSearchComponent
   ],
   imports: [
     BrowserModule,
