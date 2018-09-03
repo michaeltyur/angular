@@ -2,17 +2,24 @@
   <div class="alert alert-primary" role="alert">
     <h5>Life Search</h5>
   </div>       
-    <div class="dropdown show">
-      <input #searchBox id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"
-             type="text"
-             class="dropdown-toggle" 
-             class="form-control dropdown" 
-             placeholder="Name" 
-             (keyup)="search(searchBox.value)">
-        <div *ngIf="(recipes$ | async)?.length > 0" class="dropdown-menu show" aria-labelledby="dropdownMenuLink">
-          <a *ngFor="let recipe of recipes$ | async"
+    <div class="dropdown"
+        [class.show]="(recipes$ | async)?.length > 0">
+      <input #searchBox id="dropdownMenuLink" 
+              data-toggle="dropdown" 
+              aria-haspopup="true" 
+              aria-expanded="true"
+              type="text"
+              class="dropdown-toggle" 
+              class="form-control dropdown" 
+              placeholder="Name" 
+              (keyup)="search(searchBox.value)">
+        <div *ngIf="(recipes$ | async)?.length > 0" 
+             class="dropdown-menu" 
+             [class.show]="(recipes$ | async)?.length > 0"
+             aria-labelledby="dropdownMenuLink">
+          <div *ngFor="let recipe of recipes$ | async"
              class="dropdown-item" 
-             (click)="onSelect(recipe);searchBox.value=''">{{recipe.name}}</a>
+             (click)="onSelect(recipe);searchBox.value=''">{{recipe.name}}</div>
         </div>
   </div>  
 </div>

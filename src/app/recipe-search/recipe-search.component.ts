@@ -27,7 +27,7 @@ export class RecipeSearchComponent implements OnInit {
   ngOnInit() {
     this.recipes$=this.searchTerms.pipe(
       // wait 300ms after each keystroke before considering the term
-      debounceTime(100),
+      debounceTime(300),
       // ignore new term if same as previous term
       distinctUntilChanged(),
       // switch to new search observable each time the term changes
@@ -38,6 +38,7 @@ export class RecipeSearchComponent implements OnInit {
 
   onSelect(recipe:Recipe){
      this.recipeSelectEvent.emit(recipe);
+     //this.recipes$.empty();
   }
   search(term: string): void 
   {
