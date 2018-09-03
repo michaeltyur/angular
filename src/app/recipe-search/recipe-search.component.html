@@ -9,12 +9,11 @@
              class="form-control dropdown" 
              placeholder="Name" 
              (keyup)="search(searchBox.value)">
-                <div *ngIf="(recipes$ | async)?.length > 0" class="dropdown-menu show" aria-labelledby="dropdownMenuLink">
-                    <a *ngFor="let recipe of recipes$ | async"
-                       class="dropdown-item" 
-                       href="#"
-                       (click)="onSelect(recipe)">{{recipe.name}}</a>
-                </div>
+        <div *ngIf="(recipes$ | async)?.length > 0" class="dropdown-menu show" aria-labelledby="dropdownMenuLink">
+          <a *ngFor="let recipe of recipes$ | async"
+             class="dropdown-item" 
+             (click)="onSelect(recipe);searchBox.value=''">{{recipe.name}}</a>
+        </div>
   </div>  
 </div>
 
