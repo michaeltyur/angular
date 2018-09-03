@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import {
   debounceTime, distinctUntilChanged, switchMap
@@ -14,24 +14,35 @@ import {RecipeService} from '../recipe.service'
 })
 export class RecipeSearchComponent implements OnInit {
 
+  selectedRecipe : Recipe;
+
+  @Output() recipeSelectEvent=new EventEmitter<Recipe>();
+
   recipes$:Observable<Recipe[]>;
 
-  private searchTerms=new Subject<string>();
+  searchTerms=new Subject<string>();
 
   constructor(private recipeService:RecipeService) { }
 
   ngOnInit() {
     this.recipes$=this.searchTerms.pipe(
       // wait 300ms after each keystroke before considering the term
-      debounceTime(300),
+      debounceTime(100),
       // ignore new term if same as previous term
       distinctUntilChanged(),
       // switch to new search observable each time the term changes
       switchMap((term: string) => this.recipeService.searchRecipe(term)),
     );
+    
   }
-  search(term: string): void {
+
+  onSelect(recipe:Recipe){
+     this.recipeSelectEvent.emit(recipe);
+  }
+  search(term: string): void 
+  {
     this.searchTerms.next(term);
+    let test= this.recipes$;
   }
  
 }

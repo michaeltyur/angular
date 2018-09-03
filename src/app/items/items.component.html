@@ -1,26 +1,16 @@
 
+
 <div class="container">
-  
-  <div class="row mt-5 mb-3">
-   
-    <div class="col col-lg-4">
-      <input  type="text"
-          class="form-control" 
-          placeholder="Name" 
-          value="{{selectedItem?selectedItem.name:''}}" 
-          #name>
-    </div>
-    <div class="col col-lg-2 pull-right">
-      <button type="button"
-          class="btn btn-success pull-right"
-          (click) ="newRecipe()">Find Recipes</button>
+  <div class="row mt-5 mb-3">   
+    <div class="col col-lg-6">
+         <app-recipe-search (recipeSelectEvent)="onSelectfromSearch($event)"></app-recipe-search>
     </div>   
     <div class="col col-lg-6">
         <button type="button"
                class="btn btn-success pull-right"
                id="new-recipe-button"
               (click) ="newRecipe()">New Recipes</button>
-      </div>
+    </div>
   </div>
           
   <div class="row">
@@ -30,8 +20,7 @@
             <li class="list-group-item"
               *ngFor="let recipe of listrecipes"
               [class.active]="recipe===selectedRecipe"
-              (click)="onSelect(recipe)"
-              >
+              (click)="onSelect(recipe)">
               <h5 >{{recipe.name}}</h5>
               <p class="card-text">Description: {{recipe.description}}</p>
             </li>

@@ -32,6 +32,9 @@ export class ItemsComponent implements OnInit {
   {
     this.selectedRecipe = recipe;
   }
+  onSelectfromSearch($event){
+    this.selectedRecipe=$event;
+  }
   newRecipe():void
   {
     this.selectedRecipe=undefined;
