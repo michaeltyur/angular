@@ -17,7 +17,7 @@
              class="dropdown-menu" 
              [class.show]="(recipes$ | async)?.length > 0"
              aria-labelledby="dropdownMenuLink">
-          <div *ngFor="let recipe of recipes$ | async"
+        <div *ngFor="let recipe of recipes$ | async"
              class="dropdown-item" 
              (click)="onSelect(recipe);searchBox.value=''">{{recipe.name}}</div>
         </div>
