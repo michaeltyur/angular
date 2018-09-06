@@ -6,10 +6,7 @@
          <app-recipe-search (recipeSelectEvent)="onSelectfromSearch($event)"></app-recipe-search>
     </div>   
     <div class="col col-lg-6">
-        <button type="button"
-               class="btn btn-success pull-right"
-               id="new-recipe-button"
-              (click) ="newRecipe()">New Recipes</button>
+        
     </div>
   </div>
           
@@ -28,6 +25,10 @@
       </div>
       <div class="col">
          <app-item-details [recipe]="selectedRecipe" [(listrecipes)]="listrecipes"></app-item-details>
+         <button type="button"
+               class="btn btn-success mt-3"
+               id="new-recipe-button"
+               (click) ="newRecipe()">New Recipes</button>
       </div>
     </div>
   </div>
