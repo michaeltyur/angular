@@ -7,20 +7,54 @@
       </div>
     <div class="form-group">
       <label>Description</label>
-      <input class="form-control" placeholder="description" value="{{recipe?recipe.description:''}}" type="text" #description>
+      <input class="form-control" 
+             placeholder="description" 
+             value="{{recipe?recipe.description:''}}" 
+             type="text" 
+             #description>
     </div>
     <div class="form-group">
       <label>Ingridients</label>
-      <input class="form-control" placeholder="ingredients" value="{{recipe?recipe.ingredients:''}}" type="text" #ingredients>
+      <button class="ml-3" (click)="addIngredient()">+</button>
+      <ul class="list-group list-group-flush" 
+          *ngIf="!recipe">
+          <li class="list-group-item" 
+              *ngFor="let ingredient of listOfIngredients">
+              <div class="row">
+                  <div class="col-10">
+                    <input class="form-control" 
+                           placeholder="ingredient" 
+                           value="{{ingredient.name}}" 
+                           type="text" 
+                           #ingredient>
+                  </div>    
+                  <div class="col-1">
+                      <button (click)="removeIngredient(i)">-</button>
+                    </div>                           
+              </div>
+              
+          </li>
+      </ul>
+      <ul class="list-group list-group-flush" 
+          *ngIf="recipe">
+        <li class="list-group-item" 
+          *ngFor="let ingredient of recipe.ingredients">
+          <input class="form-control" 
+                 placeholder="ingredient" 
+                 value="{{ingredient.name}}" 
+                 type="text" 
+                 #ingredient>
+        </li>
+      </ul>
     </div>
     <button type="button" 
             *ngIf="!recipe"
             class="btn btn-primary mb-2" 
-            (click)="addNewRecipe(name.value,description.value,ingredients.value);name.value=''; description.value=''; ingredients.value=''">Add</button>
+            (click)="addNewRecipe(name.value,description.value);name.value=''; description.value=''; listOfIngredients=[]">Add</button>
     <button type="button" 
             *ngIf="recipe"
             class="btn btn-primary mb-2" 
-            (click)="updateRecipe(name.value,description.value,ingredients.value)">Update</button>
+            (click)="updateRecipe(name.value,description.value)">Update</button>
     <button type="button" 
             *ngIf="recipe"
             class="btn btn-danger mb-2 ml-3" 

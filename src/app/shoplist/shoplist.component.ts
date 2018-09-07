@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import{ListShopItems} from '../shared/models/list.shopitems'
 import{ShopItem} from '../shared/models/shopitem.model'
 import{ShopitemService} from '../shopitem.service'
+import{Ingredient} from '../shared/models/ingredient.model'
 
 @Component({
   selector: 'app-shoplist',
@@ -29,7 +30,7 @@ selectedItem:ShopItem;
     this.selectedItem = item;
   }
   addNewItem(name:string,amount:string):void{
-    this.listShopItems.push(new ShopItem(name,amount));
+    this.listShopItems.push(new ShopItem(new Ingredient(name),amount));
   }
   updateItem(name:string,amount:string):void{
     this.selectedItem.name=name;

@@ -1,10 +1,15 @@
+import{Ingredient} from './ingredient.model'
+
 export class ShopItem
 {
     name:string;
+    ingredient:Ingredient;
     amount:number;
-    constructor(name,amount)
+
+    constructor(ingredient:Ingredient,amount)
     {
-      this.name=name;
+      this.ingredient=ingredient;
       this.amount=amount;
+      this.name=ingredient.name;
     }
   }

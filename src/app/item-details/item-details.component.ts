@@ -4,6 +4,8 @@ import{Location} from '@angular/common'
 import{Recipe} from'../shared/models/recipe.model';
 import{RecipeService} from '../recipe.service';
 import { MessageService } from '../message.service';
+import{Ingredient} from '../shared/models/ingredient.model'
+
 
 
 
@@ -15,31 +17,42 @@ import { MessageService } from '../message.service';
 })
 export class ItemDetailsComponent implements OnInit {
 
-  @Input() recipe:Recipe;
+  @Input() recipe: Recipe;
 
-  @Input() listrecipes:Recipe[];
+  @Input() listrecipes: Recipe[];
+
   @Output() listrecipesChange: EventEmitter<Recipe[]> = new EventEmitter();
+
+  listOfIngredients:Ingredient[];
 
   constructor(
               private recipeService:RecipeService,
               private location:Location,
-              private messageService: MessageService
-            ) {
+              private messageService: MessageService) {
+
+    this.listOfIngredients=[];
+
   }
-  ngOnInit() {}
+
+  ngOnInit() {
+    
+  }
   
   listOfRecipesChanged() 
   {
     this.listrecipesChange.emit(this.listrecipes);
   }
 
-  updateRecipe(name:string,description:string,ingredients:string):void{
+  updateRecipe(name: string, description: string): void{
      
+    //send message to message area
      this.messageService.add("Recipe " + this.recipe.name + " are updated");
 
-     this.recipe.name=name;
-     this.recipe.description=description;
-     this.recipe.ingredients=ingredients;
+     this.recipe.name = name;
+     this.recipe.description = description;
+
+     if(this.listOfIngredients.length>0)//add ingredients array if not empty
+        this.recipe.ingredients =this.listOfIngredients;
 
      this.recipeService.updateRecipe(this.recipe).subscribe();
    }
@@ -47,13 +60,15 @@ export class ItemDetailsComponent implements OnInit {
   //   this.recipeService.updateRecipe(this.recipe)
   //     .subscribe(() => this.goBack());
   // }
-  addNewRecipe(name:string, description:string,ingredients:string):void{
-    if(!name&&!description&&!ingredients)
+  addNewRecipe(name:string, description:string): void{
+    if(!name && !description)
     {
       this.messageService.add("The fields cannot be empty");
       return;
     }
-     this.recipe=new Recipe(name,description,ingredients);
+    //if(ingredients.length>)
+     this.recipe=new Recipe(name,description,this.listOfIngredients);
+
      this.recipeService.addRecipe(this.recipe).subscribe();
 
      this.listrecipes.push(this.recipe);
@@ -62,7 +77,7 @@ export class ItemDetailsComponent implements OnInit {
     
      //this.messageService.add("Recipe " + this.recipe.name + " are added");
 
-     this.recipe=undefined;
+     this.recipe = undefined;
    }
 
   deleteRecipe():void{
@@ -78,6 +93,14 @@ export class ItemDetailsComponent implements OnInit {
    goBack():void{
      this.location.back();
    }
+   addIngredient():void{
+    if(this.listOfIngredients.length>0)
+      this.listOfIngredients.push(new Ingredient(''));
+      else this.recipe.ingredients.push(new Ingredient(''));
+   }
+   removeIngredient(index){
+    this.listOfIngredients.splice(index, 1); 
 
+   }
 }
 
