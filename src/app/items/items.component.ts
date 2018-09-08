@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Recipe } from '../shared/models/recipe.model';
 import{RecipeService} from '../recipe.service'
 import { MessageService } from '../message.service';
+import{Ingredient} from '../shared/models/ingredient.model';
 
 @Component({
   selector: 'app-items',
@@ -27,6 +28,7 @@ export class ItemsComponent implements OnInit {
     this.messageService.add('RecipeService: fetched recipe');
     this.recipeService.getListRecipes()
     .subscribe(recipes=>this.listrecipes=recipes);
+
   }
   onSelect(recipe: Recipe): void 
   {

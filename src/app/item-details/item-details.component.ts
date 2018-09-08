@@ -5,9 +5,7 @@ import{Recipe} from'../shared/models/recipe.model';
 import{RecipeService} from '../recipe.service';
 import { MessageService } from '../message.service';
 import{Ingredient} from '../shared/models/ingredient.model'
-
-
-
+import { ItemsComponent } from '../items/items.component';
 
 
 @Component({
@@ -21,9 +19,9 @@ export class ItemDetailsComponent implements OnInit {
 
   @Input() listrecipes: Recipe[];
 
-  @Output() listrecipesChange: EventEmitter<Recipe[]> = new EventEmitter();
+  @Input() listOfIngredients:Ingredient[];
 
-  listOfIngredients:Ingredient[];
+  @Output() listrecipesChange: EventEmitter<Recipe[]> = new EventEmitter();
 
   constructor(
               private recipeService:RecipeService,
@@ -34,10 +32,10 @@ export class ItemDetailsComponent implements OnInit {
 
   }
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() {}
   
+  
+
   listOfRecipesChanged() 
   {
     this.listrecipesChange.emit(this.listrecipes);
@@ -55,18 +53,19 @@ export class ItemDetailsComponent implements OnInit {
         this.recipe.ingredients =this.listOfIngredients;
 
      this.recipeService.updateRecipe(this.recipe).subscribe();
+
+     this.listOfRecipesChanged();
+
+     this.recipe = undefined;
    }
-  //  save(): void {
-  //   this.recipeService.updateRecipe(this.recipe)
-  //     .subscribe(() => this.goBack());
-  // }
-  addNewRecipe(name:string, description:string): void{
+
+   addNewRecipe(name:string, description:string): void{
     if(!name && !description)
     {
       this.messageService.add("The fields cannot be empty");
       return;
     }
-    //if(ingredients.length>)
+
      this.recipe=new Recipe(name,description,this.listOfIngredients);
 
      this.recipeService.addRecipe(this.recipe).subscribe();
@@ -74,8 +73,6 @@ export class ItemDetailsComponent implements OnInit {
      this.listrecipes.push(this.recipe);
      
      this.listOfRecipesChanged();
-    
-     //this.messageService.add("Recipe " + this.recipe.name + " are added");
 
      this.recipe = undefined;
    }
@@ -94,13 +91,15 @@ export class ItemDetailsComponent implements OnInit {
      this.location.back();
    }
    addIngredient():void{
-    if(this.listOfIngredients.length>0)
+    if(!this.recipe)
       this.listOfIngredients.push(new Ingredient(''));
       else this.recipe.ingredients.push(new Ingredient(''));
    }
    removeIngredient(index){
     this.listOfIngredients.splice(index, 1); 
-
+   }
+   onKey(text:string,item:Ingredient):void{
+    item.name=text;
    }
 }
 
