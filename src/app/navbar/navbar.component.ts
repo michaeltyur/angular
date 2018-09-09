@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ListShopItems} from '../shared/models/list.shopitems'
 
 
 @Component({
@@ -11,6 +12,7 @@ export class NavbarComponent implements OnInit {
   current: string;
   recipes: string;
   shopList: string;
+  shopListCount:number;
 
   constructor() {
     this.recipes = 'Recipes';
@@ -19,6 +21,7 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
+    
   }
   onSelect(selected: string): void {
    this.current = selected;

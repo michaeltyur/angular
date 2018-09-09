@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { Recipe } from '../shared/models/recipe.model';
-import{RecipeService} from '../recipe.service'
+import {RecipeService} from '../recipe.service'
+import {ShopitemService} from '../shopitem.service'
 import { MessageService } from '../message.service';
+import {ListShopItems} from '../shared/models/list.shopitems'
 import{Ingredient} from '../shared/models/ingredient.model';
+import { ShopItem } from '../shared/models/shopitem.model';
 
 @Component({
   selector: 'app-items',
@@ -14,10 +17,12 @@ import{Ingredient} from '../shared/models/ingredient.model';
 export class ItemsComponent implements OnInit {
 
   listrecipes:Recipe[];
+
+  listShopItems:Ingredient[];
   
   selectedRecipe : Recipe;
 
-  constructor(private recipeService:RecipeService,private messageService: MessageService) { }
+  constructor(private recipeService:RecipeService,private messageService: MessageService,private shopItemService:ShopitemService) { }
 
   ngOnInit() 
   {
@@ -25,7 +30,13 @@ export class ItemsComponent implements OnInit {
   }
   getRecipes():void
   {
-    this.messageService.add('RecipeService: fetched recipe');
+    //this.messageService.add('RecipeService: fetched recipe');
+    this.recipeService.getListRecipes()
+    .subscribe(recipes=>this.listrecipes=recipes);
+
+  }
+  getShopItems():void
+  {
     this.recipeService.getListRecipes()
     .subscribe(recipes=>this.listrecipes=recipes);
 
@@ -41,5 +52,18 @@ export class ItemsComponent implements OnInit {
   {
     this.selectedRecipe=undefined;
   }
+  buyIngredients():void{
+    let item;
+    
+    for (let index = 0; index < this.selectedRecipe.ingredients.length; index++) {
+      const element = this.selectedRecipe.ingredients[index];
 
+      this.shopItemService.getShopItem(element.name).subscribe(el=>item=el)
+
+      //check if ingredient allready exists
+      if(!item)
+        this.shopItemService.addShopItem(new ShopItem(element,1)).subscribe();//add new ingredient
+      else item.amount++;//increase quantity
+    }
+  }
 }

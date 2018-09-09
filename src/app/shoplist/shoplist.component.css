@@ -1,0 +1,15 @@
+input[type=checkbox] {
+    -ms-transform: scale(2); /* IE */
+    -moz-transform: scale(2); /* FF */
+    -webkit-transform: scale(2); /* Safari and Chrome */
+    -o-transform: scale(2); /* Opera */
+    padding: 10px;
+}
+span{
+    height: 1.5em;
+    font-size: 1em;
+    background: rgb(37, 211, 37);
+}
+li{
+    cursor:pointer;
+}

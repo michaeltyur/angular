@@ -2,11 +2,11 @@ import{ShopItem} from './shopitem.model';
 import{Ingredient} from './ingredient.model'
 
 export const ListShopItems:ShopItem[]=[
-      new ShopItem(new Ingredient('Apple'),12),
-      new ShopItem(new Ingredient('Lemon'),7),
-      new ShopItem(new Ingredient('Pesh'),3),
-      new ShopItem(new Ingredient('Salt'),2),
-      new ShopItem(new Ingredient('Sugar'),10),
+      new ShopItem(new Ingredient('apple'),12),
+      new ShopItem(new Ingredient('lemon'),7),
+      new ShopItem(new Ingredient('pesh'),3),
+      new ShopItem(new Ingredient('salt'),2),
+      new ShopItem(new Ingredient('sugar'),10),
  ];
 
 // export const ListShopItems:ShopItem[]=[

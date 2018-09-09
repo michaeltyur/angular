@@ -27,20 +27,35 @@
     <button type="button" 
             class="btn btn-secondary mr-4" 
             (click)="name.value='';amount.value=''">Clear</button>
-    <button *ngIf="selectedItem" 
-            type="button" 
-            class="btn btn-danger mr-4">Delete</button>
   </div>
   <div class="card mt-4">
       <div class="card-header">
         Shop Items
       </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item"
-        *ngFor="let shopItem of listShopItems"
-        [class.active]="shopItem===selectedItem"
-        (click)="onSelect(shopItem)">       
-        <p class="card-text">{{shopItem.name}}({{shopItem.amount}})</p> 
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-action"
+            *ngFor="let shopItem of listShopItems"
+            [class.active]="shopItem===selectedItem"
+            [class.list-group-item-dark]="itemcheckbox.checked===!checked"
+            (click)="onSelect(shopItem)">     
+          <div class="row">
+          <div class="col-1">
+            <input type="checkbox" 
+                   class="checkbox-isPurchased" 
+                   aria-label="Checkbox for following text input"
+                   
+                   #itemcheckbox> 
+          </div>
+          <div class="col-7">
+                <p class="card-text font-weight-bold text-capitalize">{{shopItem.name}}</p>                   
+          </div>   
+          <div class="col-2">
+            <span class="badge badge-primary badge-pill ml-3">{{shopItem.amount}}</span> 
+          </div>   
+          <div class="col-2">
+            <button class="btn btn-secondary" type="button" (click)="removeItem(shopItem.id)">Remove</button>
+          </div>                 
+        </div>        
       </li>
       </ul>
     </div>

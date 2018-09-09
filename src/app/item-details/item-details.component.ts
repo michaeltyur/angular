@@ -21,7 +21,9 @@ export class ItemDetailsComponent implements OnInit {
 
   @Input() listOfIngredients:Ingredient[];
 
-  @Output() listrecipesChange: EventEmitter<Recipe[]> = new EventEmitter();
+  @Output() recipeChanged: EventEmitter<Recipe> = new EventEmitter<Recipe>();
+
+  @Output() listrecipesChange: EventEmitter<Recipe[]> = new EventEmitter<Recipe[]>();
 
   constructor(
               private recipeService:RecipeService,
@@ -29,16 +31,17 @@ export class ItemDetailsComponent implements OnInit {
               private messageService: MessageService) {
 
     this.listOfIngredients=[];
-
   }
 
   ngOnInit() {}
   
-  
-
   listOfRecipesChanged() 
   {
     this.listrecipesChange.emit(this.listrecipes);
+  }
+  recipeDidChanged() 
+  {
+    this.recipeChanged.emit(this.recipe);
   }
 
   updateRecipe(name: string, description: string): void{
@@ -57,6 +60,9 @@ export class ItemDetailsComponent implements OnInit {
      this.listOfRecipesChanged();
 
      this.recipe = undefined;
+     
+     this.recipeDidChanged() ;
+
    }
 
    addNewRecipe(name:string, description:string): void{
@@ -95,8 +101,18 @@ export class ItemDetailsComponent implements OnInit {
       this.listOfIngredients.push(new Ingredient(''));
       else this.recipe.ingredients.push(new Ingredient(''));
    }
-   removeIngredient(index){
-    this.listOfIngredients.splice(index, 1); 
+   removeIngredient(index,name:string){
+
+     if(this.listOfIngredients.length>0)
+     {
+         this.listOfIngredients.splice(index, 1);
+     }
+     else 
+     {
+       this.recipe.ingredients.splice(index, 1);
+      }
+     let msg= 'Ingredient '+name+' are removed';
+     this.messageService.add(msg);
    }
    onKey(text:string,item:Ingredient):void{
     item.name=text;

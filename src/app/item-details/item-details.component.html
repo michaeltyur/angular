@@ -29,8 +29,8 @@
                            #ingredient
                            (keyup)="onKey($event.target.value,item)">
                   </div>    
-                  <div class="col-1">
-                      <button (click)="removeIngredient(i)">-</button>
+                  <div class="col-2">
+                      <button (click)="removeIngredient(i,item.name)">-</button>
                   </div>                           
               </div>
               
@@ -40,12 +40,19 @@
           *ngIf="recipe">
         <li class="list-group-item" 
           *ngFor="let item of recipe.ingredients">
-          <input class="form-control" 
-                 placeholder="ingredient" 
-                 value="{{item.name}}" 
-                 type="text" 
-                 #ingredient
-                 (keyup)="onKey($event.target.value,item)">
+          <div class="row">
+            <div class="col-10">
+              <input class="form-control" 
+                     placeholder="ingredient" 
+                     value="{{item.name}}"
+                     type="text" 
+                     #ingredient
+                     (keyup)="onKey($event.target.value,item)">
+            </div>    
+            <div class="col-2">
+                <button (click)="removeIngredient(i,item.name)">-</button>
+            </div>                           
+        </div>
         </li>
       </ul>
     </div>

@@ -14,19 +14,25 @@
             <h4 class="card-header border border-secondary rounded">Our recipes</h4>
             <li class="list-group-item"
               *ngFor="let recipe of listrecipes"
-              [class.active]="recipe===selectedRecipe"
+              [class.active]="recipe===selectedRecipe"           
               (click)="onSelect(recipe)">
-              <h5 >{{recipe.name}}</h5>
+              <h5>{{recipe.name}}</h5>
               <p class="card-text">Description: {{recipe.description}}</p>
             </li>
           </ul>
       </div>
-      <div class="col">
-         <app-item-details [recipe]="selectedRecipe" [(listrecipes)]="listrecipes"></app-item-details>
+      <div class="col" >
+         <app-item-details  [(recipe)]="selectedRecipe" [(listrecipes)]="listrecipes"></app-item-details>
          <button type="button"
                class="btn btn-success mt-3"
+               [class.disabled]="!selectedRecipe"
                id="new-recipe-button"
                (click) ="newRecipe()">New Recipes</button>
+         <button type="button"
+               [class.disabled]="!selectedRecipe||selectedRecipe.ingredients.length===0"
+               class="btn btn-success mt-3 ml-3"
+               id="new-recipe-button"
+               (click) ="buyIngredients()">Buy Ingredients</button>    
       </div>
     </div>
   </div>
