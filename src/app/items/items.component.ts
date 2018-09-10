@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input,Output,EventEmitter } from '@angular/core';
 
 import { Recipe } from '../shared/models/recipe.model';
 import {RecipeService} from '../recipe.service'
@@ -21,6 +21,8 @@ export class ItemsComponent implements OnInit {
   listShopItems:Ingredient[];
   
   selectedRecipe : Recipe;
+
+  @Output() cartCountEvent=new EventEmitter();
 
   constructor(private recipeService:RecipeService,private messageService: MessageService,private shopItemService:ShopitemService) { }
 
@@ -65,5 +67,6 @@ export class ItemsComponent implements OnInit {
         this.shopItemService.addShopItem(new ShopItem(element,1)).subscribe();//add new ingredient
       else item.amount++;//increase quantity
     }
+    this.cartCountEvent.emit(this.listShopItems.length);
   }
 }

@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'bootstrap-test2';
+  title = 'Recipes';
+  cartCount:number;
+
+  cartCountChange($event):void{
+    this.cartCount=$event;
+  }
 }

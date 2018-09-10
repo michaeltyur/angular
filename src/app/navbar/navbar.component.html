@@ -4,18 +4,18 @@
   <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item"
-      #recipesLink
-      id="recipesLink"
-      (click)="onSelect(recipes)"
-      [class.active]="current==recipes">
-        <a class="nav-link" routerLink="/recipes">Recipes</a>
+          #recipesLink
+          id="recipesLink"
+          (click)="onSelect(recipes)"
+          [class.active]="current==recipes">
+           <a class="nav-link" routerLink="/recipes">Recipes</a>
       </li>
       <li class="nav-item"
-      #shopItemsLink
-      (click)="onSelect(shopList)"
-      [class.active]="current==shopList">
-        <a class="nav-link" routerLink="/shopinglist">Shopping List
-          <span class="badge badge-primary badge-pill ml-3"></span>
+          #shopItemsLink
+          (click)="onSelect(shopList)"
+          [class.active]="current==shopList">
+           <a class="nav-link" routerLink="/shopinglist">Shopping List
+           <span class="badge badge-primary badge-pill ml-3">{{shopListCount}}</span>
         </a>
       </li>
     </ul>

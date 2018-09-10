@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import {ListShopItems} from '../shared/models/list.shopitems'
 
 
@@ -12,19 +12,22 @@ export class NavbarComponent implements OnInit {
   current: string;
   recipes: string;
   shopList: string;
-  shopListCount:number;
+  @Input() shopListCount:number;
 
   constructor() {
     this.recipes = 'Recipes';
     this.recipes = 'ShopList';
     this.current=this.recipes;
+    this.shopListCount=0;
   }
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() {}
+
   onSelect(selected: string): void {
    this.current = selected;
   }
-
+  chahgeShopListCount($event)
+  {
+   this.shopListCount=$event;
+  }
 }
