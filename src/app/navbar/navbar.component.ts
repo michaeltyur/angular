@@ -1,5 +1,9 @@
 import { Component, OnInit,Input } from '@angular/core';
+
 import {ListShopItems} from '../shared/models/list.shopitems'
+import {ShopitemService} from '../shopitem.service'
+import {MessageService} from '../message.service'
+import { error } from 'util';
 
 
 @Component({
@@ -14,20 +18,24 @@ export class NavbarComponent implements OnInit {
   shopList: string;
   @Input() shopListCount:number;
 
-  constructor() {
+  constructor(private shopItemService:ShopitemService,private messageService:MessageService) 
+  {
     this.recipes = 'Recipes';
     this.recipes = 'ShopList';
-    this.current=this.recipes;
-    this.shopListCount=0;
+    this.current = this.recipes;
+    this.shopListCount = 0;
+
+    shopItemService.changeEmitted$.subscribe(count => this.shopListCount=count);
   }
 
-  ngOnInit() {}
+  ngOnInit() 
+  {
+    this.shopItemService.getShopItemsQuantity().subscribe(shopItemsCount=>this.shopListCount=shopItemsCount,
+                                                          error=>this.messageService.add(error));
+  }
 
   onSelect(selected: string): void {
    this.current = selected;
   }
-  chahgeShopListCount($event)
-  {
-   this.shopListCount=$event;
-  }
+  
 }

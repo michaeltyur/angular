@@ -14,7 +14,6 @@ export class ShoplistComponent implements OnInit {
 
 listShopItems=ListShopItems;
 selectedItem:ShopItem;
-
   constructor(private shopItemService:ShopitemService,private messageService:MessageService) {}
 
   ngOnInit() 

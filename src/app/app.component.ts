@@ -7,9 +7,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Recipes';
-  cartCount:number;
+  cartCount : number;
 
-  cartCountChange($event):void{
-    this.cartCount=$event;
-  }
 }

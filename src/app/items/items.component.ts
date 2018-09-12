@@ -67,6 +67,9 @@ export class ItemsComponent implements OnInit {
         this.shopItemService.addShopItem(new ShopItem(element,1)).subscribe();//add new ingredient
       else item.amount++;//increase quantity
     }
-    this.cartCountEvent.emit(this.listShopItems.length);
+    let count;
+    this.shopItemService.getShopItemsQuantity().subscribe(quantity=>count=quantity);  
+    //this.cartCountEvent.emit(count);
+    this.shopItemService.emitChange(count);
   }
-}
+};

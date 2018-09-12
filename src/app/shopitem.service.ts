@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 
 import{ShopItem} from '../app/shared/models/shopitem.model'
 import{ListShopItems} from '../app/shared/models/list.shopitems'
@@ -9,6 +9,15 @@ import { Ingredient } from './shared/models/ingredient.model';
   providedIn: 'root'
 })
 export class ShopitemService {
+
+// Observable string sources
+private emitChangeSource = new Subject<any>();
+// Observable string streams
+changeEmitted$ = this.emitChangeSource.asObservable();
+// Service message commands
+emitChange(change: any) {
+    this.emitChangeSource.next(change);
+}
 
   constructor() { }
   getListShopItems():Observable<ShopItem[]>{
@@ -34,5 +43,9 @@ export class ShopitemService {
    let item=of(ListShopItems.find(shopitem => shopitem.name === name))
    item[0].isPurchased=true;
     return item;
+  }
+  getShopItemsQuantity():Observable<any>{
+   let quantity =  of(ListShopItems.length);
+    return quantity;
   }
 }
