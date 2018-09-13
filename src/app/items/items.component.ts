@@ -1,4 +1,4 @@
-import { Component, OnInit, Input,Output,EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { Recipe } from '../shared/models/recipe.model';
 import {RecipeService} from '../recipe.service'
@@ -24,7 +24,9 @@ export class ItemsComponent implements OnInit {
 
   @Output() cartCountEvent=new EventEmitter();
 
-  constructor(private recipeService:RecipeService,private messageService: MessageService,private shopItemService:ShopitemService) { }
+  constructor(private recipeService:RecipeService,
+              private messageService: MessageService,
+              private shopItemService:ShopitemService) { }
 
   ngOnInit() 
   {
@@ -67,9 +69,12 @@ export class ItemsComponent implements OnInit {
         this.shopItemService.addShopItem(new ShopItem(element,1)).subscribe();//add new ingredient
       else item.amount++;//increase quantity
     }
-    let count;
-    this.shopItemService.getShopItemsQuantity().subscribe(quantity=>count=quantity);  
-    //this.cartCountEvent.emit(count);
-    this.shopItemService.emitChange(count);
+
+    this.getShopCouter();
+
+  }
+  getShopCouter():void{
+     this.shopItemService.getShopItemsQuantity().subscribe(quantity=>this.shopItemService.emitChange(quantity));  
+
   }
 };

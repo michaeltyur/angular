@@ -29,9 +29,11 @@ selectedItem:ShopItem;
     {
         this.shopItemService.addShopItem(new ShopItem(new Ingredient(name),amount));
         this.messageService.add('Item '+{name}+' are aded');
+        this.getShopCouter();
     }
     else this.messageService.add('The fields can not be empty');
     //this.listShopItems.push(new ShopItem(new Ingredient(name),amount));
+
   }
   updateItem(name:string,amount:string):void{
     //this.shopItemService.updateShopItem(this.selectedItem.id,name,amount);
@@ -45,8 +47,13 @@ selectedItem:ShopItem;
   }
   removeItem(id:number):void{
     this.shopItemService.deletShopItem(id);
+    this.getShopCouter();
   }
   onSelect(item: ShopItem): void {
     this.selectedItem = item;
   }
+  getShopCouter():void{
+    this.shopItemService.getShopItemsQuantity().subscribe(quantity=>this.shopItemService.emitChange(quantity));  
+
+ }
 }
