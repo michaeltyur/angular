@@ -16,16 +16,16 @@ export class RecipeSearchComponent implements OnInit {
 
   selectedRecipe : Recipe;
 
-  @Output() recipeSelectEvent=new EventEmitter<Recipe>();
+  @Output() recipeSelectEvent = new EventEmitter<Recipe>();
 
-  recipes$:Observable<Recipe[]>;
+  recipes$: Observable<Recipe[]>;
 
-  searchTerms=new Subject<string>();
+  searchTerms = new Subject<string>();
 
   constructor(private recipeService:RecipeService) { }
 
   ngOnInit() {
-    this.recipes$=this.searchTerms.pipe(
+    this.recipes$ = this.searchTerms.pipe(
       // wait 300ms after each keystroke before considering the term
       debounceTime(300),
       // ignore new term if same as previous term
@@ -43,7 +43,6 @@ export class RecipeSearchComponent implements OnInit {
   search(term: string): void 
   {
     this.searchTerms.next(term);
-    let test= this.recipes$;
   }
  
 }
