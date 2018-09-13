@@ -42,11 +42,14 @@
           <div class="col-1">
             <input type="checkbox" 
                    class="checkbox-isPurchased" 
-                   aria-label="Checkbox for following text input"                 
+                   aria-label="Checkbox for following text input"  
+                   [(ngModel)]="shopItem.isPurchased"            
                    #itemcheckbox> 
           </div>
           <div class="col-7">
-                <p class="card-text font-weight-bold text-capitalize">{{shopItem.name}}</p>                   
+                <p class="card-text font-weight-bold text-capitalize" 
+                   [style.text-decoration]="shopItem.isPurchased ? 'line-through': 'none' "
+                   [style.text-decoration-style]="shopItem.isPurchased ? 'double': 'none' ">{{shopItem.name}}</p>                   
           </div>   
           <div class="col-2">
             <span class="badge badge-primary badge-pill ml-3">{{shopItem.amount}}</span> 
