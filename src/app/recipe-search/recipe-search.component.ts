@@ -38,11 +38,11 @@ export class RecipeSearchComponent implements OnInit {
 
   onSelect(recipe:Recipe){
      this.recipeSelectEvent.emit(recipe);
-     //this.recipes$.empty();
+     this.ngOnInit();
   }
   search(term: string): void 
   {
     this.searchTerms.next(term);
   }
- 
+
 }
