@@ -13,6 +13,7 @@ const httpOptions = {
 @Injectable({
   providedIn: 'root'
 })
+
 export class RecipeService {
 
   private recipesUrl = 'api/recipes';  // URL to web api
@@ -22,9 +23,10 @@ export class RecipeService {
     private messageService:MessageService) {  }
 
   getListRecipes():Observable<Recipe[]>{
-   return this.http.get<Recipe[]>(this.recipesUrl).pipe(
-     catchError(this.handleError('getrecipes',[]))
-   );
+   return this.http.get<Recipe[]>(this.recipesUrl);
+  //  .pipe(
+  //    catchError(this.handleError('getrecipes',[]))
+  //  );
   }
   /** GET hero by id. Will 404 if id not found */
   getRecipe(id: number): Observable<Recipe> 

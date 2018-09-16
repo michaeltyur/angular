@@ -4,7 +4,6 @@ import { Recipe } from '../shared/models/recipe.model';
 import {RecipeService} from '../recipe.service'
 import {ShopitemService} from '../shopitem.service'
 import { MessageService } from '../message.service';
-import {ListShopItems} from '../shared/models/list.shopitems'
 import{Ingredient} from '../shared/models/ingredient.model';
 import { ShopItem } from '../shared/models/shopitem.model';
 
@@ -57,24 +56,22 @@ export class ItemsComponent implements OnInit {
     this.selectedRecipe=undefined;
   }
   buyIngredients():void{
+
     let item;
-    
+
     for (let index = 0; index < this.selectedRecipe.ingredients.length; index++) {
+
       const element = this.selectedRecipe.ingredients[index];
 
-      this.shopItemService.getShopItem(element.name).subscribe(el=>item=el)
-
-      //check if ingredient allready exists
-      if(!item)
-        this.shopItemService.addShopItem(new ShopItem(element,1)).subscribe();//add new ingredient
-      else item.amount++;//increase quantity
+      this.shopItemService.addShopItem(new ShopItem(element,1));
+      
     }
 
     this.getShopCouter();
 
   }
   getShopCouter():void{
-     this.shopItemService.getShopItemsQuantity().subscribe(quantity=>this.shopItemService.emitChange(quantity));  
+     this.shopItemService.getShopItemsQuantity();  
 
   }
 };

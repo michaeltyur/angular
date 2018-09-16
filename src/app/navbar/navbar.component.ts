@@ -1,6 +1,5 @@
 import { Component, OnInit,Input } from '@angular/core';
 
-import {ListShopItems} from '../shared/models/list.shopitems'
 import {ShopitemService} from '../shopitem.service'
 import {MessageService} from '../message.service'
 import { error } from 'util';
@@ -30,8 +29,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() 
   {
-    this.shopItemService.getShopItemsQuantity().subscribe(shopItemsCount=>this.shopListCount=shopItemsCount,
-                                                          error=>this.messageService.add(error));
+    //this.shopItemService.getShopItemsQuantity().subscribe(shopItemsCount=>this.shopListCount=shopItemsCount);
   }
 
   onSelect(selected: string): void {

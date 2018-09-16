@@ -30,7 +30,7 @@
   </div>
   <div class="card mt-4">
       <div class="card-header">
-        Shop Items
+        Shop Items{{count}}
       </div>
       <ul class="list-group">
         <li class="list-group-item list-group-item-action"
@@ -55,7 +55,7 @@
             <span class="badge badge-primary badge-pill ml-3">{{shopItem.amount}}</span> 
           </div>   
           <div class="col-2">
-            <button class="btn btn-secondary" type="button" (click)="removeItem(shopItem.id)">Remove</button>
+            <button class="btn btn-secondary" type="button" (click)="removeItem(shopItem)">Remove</button>
           </div>                 
         </div>        
       </li>

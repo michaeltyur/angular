@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {ListShopItems} from '../shared/models/list.shopitems'
 import {ShopItem} from '../shared/models/shopitem.model'
 import {ShopitemService} from '../shopitem.service'
 import {Ingredient} from '../shared/models/ingredient.model'
 import {MessageService} from '../message.service';
+import { reject } from 'q';
 
 @Component({
   selector: 'app-shoplist',
@@ -12,48 +12,61 @@ import {MessageService} from '../message.service';
 })
 export class ShoplistComponent implements OnInit {
 
-listShopItems=ListShopItems;
+listShopItems:ShopItem[];
+
 selectedItem:ShopItem;
+
+count:any;
+
   constructor(private shopItemService:ShopitemService,private messageService:MessageService) {}
 
   ngOnInit() 
   {
     this.getShopItems();
   }
+
   getShopItems():void{
     this.shopItemService.getListShopItems()
-    .subscribe(shopItems=>this.listShopItems=shopItems);
-  }
-  addNewItem(name:string,amount:string):void{
-    if(name && amount)
-    {
-        this.shopItemService.addShopItem(new ShopItem(new Ingredient(name),amount));
-        this.messageService.add('Item '+{name}+' are aded');
-        this.getShopCouter();
-    }
-    else this.messageService.add('The fields can not be empty');
-    //this.listShopItems.push(new ShopItem(new Ingredient(name),amount));
+    .then(shopItems=>this.listShopItems=shopItems);
 
   }
+
+  addNewItem(name:string,amount:string):void{
+    
+    if(name && amount)
+    {
+        this.shopItemService.addShopItem(new ShopItem(new Ingredient(name),amount)).then(res=>
+          {
+            this.getShopItems();
+          });       
+    }
+    else console.error('The fields can not be empty');
+
+  }
+
   updateItem(name:string,amount:string):void{
-    //this.shopItemService.updateShopItem(this.selectedItem.id,name,amount);
+ 
     if(name && amount)
     {
       this.selectedItem.name=name;
       this.selectedItem.amount=Number(amount);
-      this.messageService.add('Item'+{name}+' are updated');
+      this.shopItemService.updateShopItem(this.selectedItem);
     }
-    else this.messageService.add('The fields can not be empty');    
+    else console.error('The fields can not be empty');    
   }
-  removeItem(id:number):void{
-    this.shopItemService.deletShopItem(id);
-    this.getShopCouter();
+
+  removeItem(item: ShopItem):void{
+
+      this.shopItemService.deleteShopItem(item).then(res=>{
+          this.getShopItems();
+          this.selectedItem=undefined;
+    },reject=>console.error(reject));
+  
+    
   }
+
   onSelect(item: ShopItem): void {
     this.selectedItem = item;
   }
-  getShopCouter():void{
-    this.shopItemService.getShopItemsQuantity().subscribe(quantity=>this.shopItemService.emitChange(quantity));  
 
- }
 }

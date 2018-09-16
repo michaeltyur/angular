@@ -1,51 +1,126 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError, tap, map, filter, find } from 'rxjs/operators';
 
 import { ShopItem } from '../app/shared/models/shopitem.model'
-import { ListShopItems } from '../app/shared/models/list.shopitems'
 import { Ingredient } from './shared/models/ingredient.model';
+import { IngredientService } from './ingredient.service';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class ShopitemService {
+
+  quantity: number;
+
+  private shopItemsUrl = 'api/shopitems';  // URL to web api
 
   // Observable string sources
   private emitChangeSource = new Subject<any>();
   // Observable string streams
   changeEmitted$ = this.emitChangeSource.asObservable();
+
   // Service message commands
   emitChange(change: any) {
     this.emitChangeSource.next(change);
   }
 
-  constructor() { }
-  getListShopItems(): Observable<ShopItem[]> {
-    return of(ListShopItems);
-  }
-  getShopItem(name: string): Observable<ShopItem> {
-    return of(ListShopItems.find(shopitem => shopitem.name === name));
-  }
-  deletShopItem(id: number): Observable<ShopItem[]> {
-    const index: number = ListShopItems.indexOf(ListShopItems.find(i => i.id == id));
-    if (index >= 0)
-      return of(ListShopItems.splice(index, 1));
-  }
-  addShopItem(item: ShopItem): Observable<number> {
+  constructor(private http: HttpClient,private ingredientService:IngredientService) {
 
-    item.id = ListShopItems.length;
+    this.getShopItemsQuantity();//send to subscrubers Quantity of items list
 
-    return of(ListShopItems.push(item));
+   }
+
+  getListShopItems(): Promise<ShopItem[]> {
+
+    return this.http.get<ShopItem[]>(this.shopItemsUrl).toPromise();
+
   }
 
-  onBuyShopItem(id: number): Observable<ShopItem> {
+  getShopItemById(item: ShopItem): Promise<ShopItem> {
 
-    let item = of(ListShopItems.find(shopitem => shopitem.name === name))
-    item[0].isPurchased = true;
-    return item;
+    if(item)
+    {
+      const itemUrl = `${this.shopItemsUrl}/${item.id}`;
+
+      return this.http.get<ShopItem>(itemUrl).toPromise();
+    }
+    
   }
+
+  getShopItemByName(name: string): Promise<ShopItem> {
+
+    if(name)
+    {
+      return this.http.get<ShopItem[]>(this.shopItemsUrl).pipe(
+                       map(items => items.find(result => result.name == name))
+                      ).toPromise();
+    }   
+  }
+
+  addShopItem(item: ShopItem): Promise<ShopItem> {
+
+    if(item)
+    {
+       this.getShopItemByName(item.name).then(res=>{
+        if(res)
+        {
+          res.amount++;
+          this.updateShopItem(res);
+        }
+        else{
+         let promise =  this.http.post<ShopItem>(this.shopItemsUrl, item, httpOptions).toPromise();
+         promise.then(res => this.getShopItemsQuantity());
+         return promise;
+        }
+      })   
+      return Promise.reject("The item is exist");
+    }
+    
+
+  }
+
+  updateShopItem(item: ShopItem): Promise<ShopItem> {
+
+    if(item)
+    {
+      let promise = this.http.put<ShopItem>(this.shopItemsUrl, item, httpOptions).toPromise();
+
+      promise.then(res => this.getShopItemsQuantity());
+
+      return promise;
+    }
+  }
+
+  deleteShopItem(item: ShopItem): Promise<ShopItem> {
+
+    if (item) {
+      const itemUrl = `${this.shopItemsUrl}/${item.id}`;
+
+      let promise = this.http.delete<ShopItem>(itemUrl, httpOptions).toPromise();
+
+      promise.then(res => this.getShopItemsQuantity());
+
+      return promise;
+    }
+  }
+
   getShopItemsQuantity(): Observable<any> {
-    let quantity = of(ListShopItems.length);
-    return quantity;
+
+    let number;
+
+    this.http.get<ShopItem[]>(this.shopItemsUrl).subscribe(result => {
+      number = result.length
+      this.emitChange(result.length);
+    });
+
+    return number;
+
   }
 }
