@@ -45,13 +45,14 @@ export class IngredientService {
 
     if(item)
     {
+      let promise;
        this.http.get<Ingredient[]>(this.ingredientsUrl).subscribe(res=>{
          if(!res.find(result=>result.name==item.name))
          {
-             return this.http.post<Ingredient>(this.ingredientsUrl, item, httpOptions).toPromise();
+             promise = this.http.post<Ingredient>(this.ingredientsUrl, item, httpOptions).toPromise();
          }
-        })     
-        return Promise.reject("the item is existing");
+        })   
+        return promise;  
     }
   }
 

@@ -77,7 +77,9 @@ export class ShopitemService {
           promise = this.updateShopItem(res);
         }
         else{
+
          promise =  this.http.post<ShopItem>(this.shopItemsUrl, item, httpOptions).toPromise();
+                    this.ingredientService.addIngredient(item.ingredient);
          console.log("the item is edded");
          promise.then(res => this.getShopItemsQuantity());
         }
