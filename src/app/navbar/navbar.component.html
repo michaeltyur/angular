@@ -10,15 +10,15 @@
           [class.active]="current=='Recipes'">
            <a class="nav-link" routerLink="/recipes">Recipes</a>
       </li>
-      <li class="nav-item"
+      <li class="nav-item ml-3"
           #shopItemsLink
           (click)="onSelect('ShopList')"
           [class.active]="current=='ShopList'">
            <a class="nav-link" routerLink="/shopinglist">Shopping List
-           <span class="badge badge-primary badge-pill ml-3">{{shopListCount}}</span>
+           <span class="badge badge-primary badge-pill">{{shopListCount}}</span>
         </a>
       </li>
-      <li class="nav-item"
+      <li class="nav-item ml-3"
       #ingredientsLink
       (click)="onSelect('Ingredients')"
       [class.active]="current=='Ingredients'">
