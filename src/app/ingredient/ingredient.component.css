@@ -1,0 +1,7 @@
+.list-group-item{
+    cursor: pointer;
+}
+.card-header{
+    font-size: 18px;
+    color: aliceblue;
+}

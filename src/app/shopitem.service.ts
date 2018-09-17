@@ -66,21 +66,23 @@ export class ShopitemService {
 
   addShopItem(item: ShopItem): Promise<ShopItem> {
 
+    let promise;
     if(item)
     {
        this.getShopItemByName(item.name).then(res=>{
         if(res)
         {
           res.amount++;
-          this.updateShopItem(res);
+          console.log("the item is exist");
+          promise = this.updateShopItem(res);
         }
         else{
-         let promise =  this.http.post<ShopItem>(this.shopItemsUrl, item, httpOptions).toPromise();
+         promise =  this.http.post<ShopItem>(this.shopItemsUrl, item, httpOptions).toPromise();
+         console.log("the item is edded");
          promise.then(res => this.getShopItemsQuantity());
-         return promise;
         }
-      })   
-      return Promise.reject("The item is exist");
+      })  
+      return promise; 
     }
     
 

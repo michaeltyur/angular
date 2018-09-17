@@ -6,18 +6,25 @@
       <li class="nav-item"
           #recipesLink
           id="recipesLink"
-          (click)="onSelect(recipes)"
-          [class.active]="current==recipes">
+          (click)="onSelect('Recipes')"
+          [class.active]="current=='Recipes'">
            <a class="nav-link" routerLink="/recipes">Recipes</a>
       </li>
       <li class="nav-item"
           #shopItemsLink
-          (click)="onSelect(shopList)"
-          [class.active]="current==shopList">
+          (click)="onSelect('ShopList')"
+          [class.active]="current=='ShopList'">
            <a class="nav-link" routerLink="/shopinglist">Shopping List
            <span class="badge badge-primary badge-pill ml-3">{{shopListCount}}</span>
         </a>
       </li>
+      <li class="nav-item"
+      #ingredientsLink
+      (click)="onSelect('Ingredients')"
+      [class.active]="current=='Ingredients'">
+       <a class="nav-link" routerLink="/ingredients">Ingredients
+    </a>
+  </li>
     </ul>
   </div>
 </div>

@@ -13,6 +13,7 @@ import { ShoplistComponent } from './shoplist/shoplist.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { MessagesComponent } from './messages/messages.component';
 import { RecipeSearchComponent } from './recipe-search/recipe-search.component';
+import { IngredientComponent } from './ingredient/ingredient.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { RecipeSearchComponent } from './recipe-search/recipe-search.component';
     ItemDetailsComponent,
     ShoplistComponent,
     MessagesComponent,
-    RecipeSearchComponent
+    RecipeSearchComponent,
+    IngredientComponent
   ],
   imports: [
     BrowserModule,

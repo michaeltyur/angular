@@ -19,9 +19,9 @@ export class NavbarComponent implements OnInit {
 
   constructor(private shopItemService:ShopitemService,private messageService:MessageService) 
   {
-    this.recipes = 'Recipes';
-    this.recipes = 'ShopList';
-    this.current = this.recipes;
+
+    this.current = "Recipes";
+
     this.shopListCount = 0;
 
     shopItemService.changeEmitted$.subscribe(count => this.shopListCount=count);
@@ -33,7 +33,9 @@ export class NavbarComponent implements OnInit {
   }
 
   onSelect(selected: string): void {
+
    this.current = selected;
+
   }
   
 }

@@ -1,0 +1,11 @@
+<div class="container mt-5">
+    <ul class="list-group">
+        <div class="card-header bg-secondary mt-5">
+           Ingredients
+        </div>
+        <li class="list-group-item list-group-item-action" *ngFor="let item of ingredients">
+          <h5 class="mb-1 text-capitalize">{{item.name}}</h5> 
+          <p class="mb-1">{{item.description?item.description:"Not Description"}}</p>
+        </li>
+  </ul>
+</div>
