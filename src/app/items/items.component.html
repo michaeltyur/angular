@@ -15,7 +15,8 @@
             <li class="list-group-item"
               *ngFor="let recipe of listrecipes"
               [class.active]="recipe===selectedRecipe"           
-              (click)="onSelect(recipe)">
+              (click)="onSelect(recipe)"
+              appHover>
               <h5>{{recipe.name}}</h5>
               <p class="card-text">Description: {{recipe.description}}</p>
             </li>

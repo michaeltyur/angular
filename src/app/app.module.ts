@@ -14,6 +14,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import { MessagesComponent } from './messages/messages.component';
 import { RecipeSearchComponent } from './recipe-search/recipe-search.component';
 import { IngredientComponent } from './ingredient/ingredient.component';
+import { HoverDirective } from './directives/hover.directive';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { IngredientComponent } from './ingredient/ingredient.component';
     ShoplistComponent,
     MessagesComponent,
     RecipeSearchComponent,
-    IngredientComponent
+    IngredientComponent,
+    HoverDirective
   ],
   imports: [
     BrowserModule,
