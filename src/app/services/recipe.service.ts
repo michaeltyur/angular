@@ -23,7 +23,10 @@ export class RecipeService {
   constructor(
     private http: HttpClient,
     private messageService:MessageService,
-    private ingredientService:IngredientService) {  }
+    private ingredientService:IngredientService) { 
+      
+      this.getItemsCount();
+     }
 
     getItemsCount():void{
 

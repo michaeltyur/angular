@@ -37,7 +37,8 @@
             *ngFor="let shopItem of listShopItems"
             [class.active]="shopItem===selectedItem"
             [class.list-group-item-dark]="itemcheckbox.checked===!checked"
-            (click)="onSelect(shopItem)">     
+            (click)="onSelect(shopItem)"
+            appHover>     
           <div class="row">
           <div class="col-1">
             <input type="checkbox" 
