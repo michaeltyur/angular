@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output,EventEmitter, DoCheck } from '@angular
 import{Location} from '@angular/common'
  
 import{Recipe} from'../shared/models/recipe.model';
-import{RecipeService} from '../recipe.service';
+import{RecipeService} from '../services/recipe.service';
 import { MessageService } from '../message.service';
 import{Ingredient} from '../shared/models/ingredient.model'
 import { ItemsComponent } from '../items/items.component';

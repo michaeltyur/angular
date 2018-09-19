@@ -3,8 +3,8 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 
-import {Recipe} from './shared/models/recipe.model'
-import {MessageService} from './message.service'
+import {Recipe} from '../shared/models/recipe.model'
+import {MessageService} from '../message.service'
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

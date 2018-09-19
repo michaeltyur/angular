@@ -5,7 +5,7 @@ import {
 } from 'rxjs/operators';
 
 import{Recipe} from '../shared/models/recipe.model'
-import {RecipeService} from '../recipe.service'
+import {RecipeService} from '../services/recipe.service'
 import { RecipeSearchService } from '../services/recipe-search.service';
 
 @Component({
