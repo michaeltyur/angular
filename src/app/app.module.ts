@@ -17,6 +17,7 @@ import { IngredientComponent } from './ingredient/ingredient.component';
 import { HoverDirective } from './directives/hover.directive';
 import { SearchPipe } from './pipes/search.pipe';
 import { RecipeSearchService } from './services/recipe-search.service';
+import { ShopitemService } from './services/shopitem.service';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { RecipeSearchService } from './services/recipe-search.service';
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false })
   ],
-  providers: [RecipeSearchService],
+  providers: [RecipeSearchService,ShopitemService],
   bootstrap: [AppComponent] 
 })
 export class AppModule {

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ShopItem} from '../shared/models/shopitem.model'
-import {ShopitemService} from '../shopitem.service'
+import {ShopitemService} from '../services/shopitem.service'
 import {Ingredient} from '../shared/models/ingredient.model'
 import {MessageService} from '../message.service';
 import { reject } from 'q';

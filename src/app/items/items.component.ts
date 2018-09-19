@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { Recipe } from '../shared/models/recipe.model';
 import {RecipeService} from '../recipe.service'
-import {ShopitemService} from '../shopitem.service'
+import {ShopitemService} from '../services/shopitem.service'
 import { MessageService } from '../message.service';
 import{Ingredient} from '../shared/models/ingredient.model';
 import { ShopItem } from '../shared/models/shopitem.model';
