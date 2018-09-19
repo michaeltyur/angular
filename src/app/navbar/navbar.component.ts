@@ -24,7 +24,8 @@ export class NavbarComponent implements OnInit {
 
     this.shopListCount = 0;
 
-    shopItemService.changeEmitted$.subscribe(count => this.shopListCount=count);
+    //shopItemService.changeEmitted$.subscribe(count => this.shopListCount=count);
+    shopItemService.countChanged$.subscribe(count => this.shopListCount=count);
   }
 
   ngOnInit() 

@@ -6,6 +6,7 @@ import {ShopitemService} from '../shopitem.service'
 import { MessageService } from '../message.service';
 import{Ingredient} from '../shared/models/ingredient.model';
 import { ShopItem } from '../shared/models/shopitem.model';
+import { RecipeSearchService } from '../services/recipe-search.service';
 
 @Component({
   selector: 'app-items',
@@ -21,11 +22,18 @@ export class ItemsComponent implements OnInit {
   
   selectedRecipe : Recipe;
 
+  searchStr:string;
+
   @Output() cartCountEvent=new EventEmitter();
 
   constructor(private recipeService:RecipeService,
-              private messageService: MessageService,
-              private shopItemService:ShopitemService) { }
+              private searchService:RecipeSearchService,
+              private shopItemService:ShopitemService) 
+ { 
+   this.searchStr="";
+   searchService.stringSearch$.subscribe(res=>this.searchStr=res);
+   searchService.recipeSelectEvent$.subscribe(res=>this.selectedRecipe=res);
+ }
 
   ngOnInit() 
   {
@@ -33,7 +41,6 @@ export class ItemsComponent implements OnInit {
   }
   getRecipes():void
   {
-    //this.messageService.add('RecipeService: fetched recipe');
     this.recipeService.getListRecipes()
     .subscribe(recipes=>this.listrecipes=recipes);
 
@@ -47,9 +54,6 @@ export class ItemsComponent implements OnInit {
   onSelect(recipe: Recipe): void 
   {
     this.selectedRecipe = recipe;
-  }
-  onSelectfromSearch($event){
-    this.selectedRecipe=$event;
   }
   newRecipe():void
   {

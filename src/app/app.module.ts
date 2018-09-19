@@ -15,6 +15,8 @@ import { MessagesComponent } from './messages/messages.component';
 import { RecipeSearchComponent } from './recipe-search/recipe-search.component';
 import { IngredientComponent } from './ingredient/ingredient.component';
 import { HoverDirective } from './directives/hover.directive';
+import { SearchPipe } from './pipes/search.pipe';
+import { RecipeSearchService } from './services/recipe-search.service';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { HoverDirective } from './directives/hover.directive';
     MessagesComponent,
     RecipeSearchComponent,
     IngredientComponent,
-    HoverDirective
+    HoverDirective,
+    SearchPipe
   ],
   imports: [
     BrowserModule,
@@ -36,7 +39,7 @@ import { HoverDirective } from './directives/hover.directive';
     HttpClientInMemoryWebApiModule.forRoot(
       InMemoryDataService, { dataEncapsulation: false })
   ],
-  providers: [],
+  providers: [RecipeSearchService],
   bootstrap: [AppComponent] 
 })
 export class AppModule {

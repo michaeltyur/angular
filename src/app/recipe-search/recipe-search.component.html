@@ -1,26 +1,44 @@
-<div  id="search-component">  
-  <div class="alert alert-primary" role="alert">
-    <h5>Life Search</h5>
-  </div>       
-    <div class="dropdown"
-        [class.show]="(recipes$ | async)?.length > 0">
-      <input #searchBox id="dropdownMenuLink" 
-              data-toggle="dropdown" 
-              aria-haspopup="true" 
-              aria-expanded="true"
-              type="text"
-              class="dropdown-toggle" 
-              class="form-control dropdown" 
-              placeholder="Name" 
-              (keyup)="search(searchBox.value)">
-        <div *ngIf="(recipes$ | async)?.length > 0" 
-             class="dropdown-menu" 
-             [class.show]="(recipes$ | async)?.length > 0"
-             aria-labelledby="dropdownMenuLink">
-        <div *ngFor="let recipe of recipes$ | async"
-             class="dropdown-item" 
-             (click)="onSelect(recipe);searchBox.value=''">{{recipe.name}}</div>
-        </div>
-  </div>  
-</div>
+<div class="row mt-5 mb-4">   
+    <div class="col col-lg-6 mt-3">
+      <div class="card" id="search-component">  
+            <div class="card-header border border-secondary rounded">
+               <h5>Life Search</h5> 
+            </div>    
+          <div class="dropdown"
+              [class.show]="(recipes$ | async)?.length > 0">
+            <input #searchBox id="dropdownMenuLink" 
+                    data-toggle="dropdown" 
+                    aria-haspopup="true" 
+                    aria-expanded="true"
+                    type="text"
+                    class="dropdown-toggle" 
+                    class="form-control dropdown" 
+                    placeholder="Name" 
+                    (keyup)="search(searchBox.value)">
+              <div *ngIf="(recipes$ | async)?.length > 0" 
+                   class="dropdown-menu" 
+                   [class.show]="(recipes$ | async)?.length > 0"
+                   aria-labelledby="dropdownMenuLink">
+              <div *ngFor="let recipe of recipes$ | async"
+                   class="dropdown-item" 
+                   (click)="onSelect(recipe);searchBox.value=''">{{recipe.name}}</div>
+              </div>
+        </div>  
+      </div>
+    </div>   
+    <div class="col col-lg-6 mt-3">       
+        <div class="card" id="search-component">  
+            <div class="card-header border border-secondary rounded">
+               <h5>Super Life Search</h5> 
+            </div>    
+            <input #searchBox2
+                    type="text"
+                    class="form-control" 
+                    placeholder="Name" 
+                    (keyup)="superSearch(searchBox2.value)"> 
+      </div>
+    </div>
+  </div>
+
+
 

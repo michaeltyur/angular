@@ -6,6 +6,7 @@ import {
 
 import{Recipe} from '../shared/models/recipe.model'
 import {RecipeService} from '../recipe.service'
+import { RecipeSearchService } from '../services/recipe-search.service';
 
 @Component({
   selector: 'app-recipe-search',
@@ -20,9 +21,16 @@ export class RecipeSearchComponent implements OnInit {
 
   recipes$: Observable<Recipe[]>;
 
-  searchTerms = new Subject<string>();
+  searchTerms : Subject<string>;
 
-  constructor(private recipeService:RecipeService) { }
+  //stringSearch$ : EventEmitter<string>;
+  //stringSearch:string;
+
+  constructor(private recipeService:RecipeService,private searchService:RecipeSearchService) { 
+
+    this.searchTerms = new Subject<string>();
+    //this.stringSearch$=new EventEmitter<string>(); 
+  }
 
   ngOnInit() {
     this.recipes$ = this.searchTerms.pipe(
@@ -37,12 +45,17 @@ export class RecipeSearchComponent implements OnInit {
   }
 
   onSelect(recipe:Recipe){
-     this.recipeSelectEvent.emit(recipe);
-     this.ngOnInit();
+     //this.recipeSelectEvent.emit(recipe);
+     this.searchService.search(recipe);
+     this.ngOnInit();  
   }
   search(term: string): void 
   {
     this.searchTerms.next(term);
   }
-
+   superSearch(name:string)
+   {
+    this.searchService.superSearch(name);
+    //this.stringSearch$.emit(name);
+   }
 }

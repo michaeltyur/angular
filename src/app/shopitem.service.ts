@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable,EventEmitter } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap, map, filter, find } from 'rxjs/operators';
@@ -22,19 +22,21 @@ export class ShopitemService {
   private shopItemsUrl = 'api/shopitems';  // URL to web api
 
   // Observable string sources
-  private emitChangeSource = new Subject<any>();
+  //private emitChangeSource = new Subject<any>();
   // Observable string streams
-  changeEmitted$ = this.emitChangeSource.asObservable();
+  //changeEmitted$ = this.emitChangeSource.asObservable();
+
+  public countChanged$: EventEmitter<number>;
 
   // Service message commands
-  emitChange(change: any) {
-    this.emitChangeSource.next(change);
-  }
+  // emitChange(change: any) {
+  //   this.emitChangeSource.next(change);
+  // }
 
   constructor(private http: HttpClient,private ingredientService:IngredientService) {
 
     this.getShopItemsQuantity();//send to subscrubers Quantity of items list
-
+    this.countChanged$ = new EventEmitter();//event for changed counter of shop items
    }
 
   getListShopItems(): Promise<ShopItem[]> {
@@ -69,7 +71,7 @@ export class ShopitemService {
     let promise;
     if(item)
     {
-       this.getShopItemByName(item.name).then(res=>{
+       promise = this.getShopItemByName(item.name).then(res=>{
         if(res)
         {
           res.amount++;
@@ -77,11 +79,10 @@ export class ShopitemService {
           promise = this.updateShopItem(res);
         }
         else{
-
-         promise =  this.http.post<ShopItem>(this.shopItemsUrl, item, httpOptions).toPromise();
-                    this.ingredientService.addIngredient(item.ingredient);
-         console.log("the item is edded");
-         promise.then(res => this.getShopItemsQuantity());
+            promise = this.http.post<ShopItem>(this.shopItemsUrl, item, httpOptions).toPromise();
+            this.ingredientService.addIngredient(item.ingredient);
+            console.log("the item is edded");
+            promise.then(res => this.getShopItemsQuantity());
         }
       })  
       return promise; 
@@ -121,7 +122,8 @@ export class ShopitemService {
 
     this.http.get<ShopItem[]>(this.shopItemsUrl).subscribe(result => {
       number = result.length
-      this.emitChange(result.length);
+      //this.emitChange(result.length);
+      this.countChanged$.emit(result.length);
     });
 
     return number;
