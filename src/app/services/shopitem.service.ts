@@ -25,8 +25,8 @@ export class ShopitemService {
 
   constructor(private http: HttpClient,private ingredientService:IngredientService) {
 
-    this.getShopItemsQuantity();//send to subscrubers Quantity of items list
     this.countChanged$ = new EventEmitter();//event for changed counter of shop items
+    this.getShopItemsQuantity();//send to subscrubers Quantity of items list
    }
 
   getListShopItems(): Promise<ShopItem[]> {
@@ -112,7 +112,6 @@ export class ShopitemService {
 
     this.http.get<ShopItem[]>(this.shopItemsUrl).subscribe(result => {
       number = result.length
-      //this.emitChange(result.length);
       this.countChanged$.emit(result.length);
     });
 

@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable,EventEmitter } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import {Recipe} from '../shared/models/recipe.model'
 import {MessageService} from './message.service'
+import {IngredientService} from './ingredient.service'
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -17,16 +18,23 @@ const httpOptions = {
 export class RecipeService {
 
   private recipesUrl = 'api/recipes';  // URL to web api
+  itemsCounterEmitter$=new EventEmitter();
 
   constructor(
     private http: HttpClient,
-    private messageService:MessageService) {  }
+    private messageService:MessageService,
+    private ingredientService:IngredientService) {  }
+
+    getItemsCount():void{
+
+      this.getListRecipes().subscribe(res=> this.itemsCounterEmitter$.emit(res.length));
+    }
+    
 
   getListRecipes():Observable<Recipe[]>{
-   return this.http.get<Recipe[]>(this.recipesUrl);
-  //  .pipe(
-  //    catchError(this.handleError('getrecipes',[]))
-  //  );
+   let recipes= this.http.get<Recipe[]>(this.recipesUrl);
+   recipes.subscribe(res=>this.getItemsCount());
+   return recipes;
   }
   /** GET hero by id. Will 404 if id not found */
   getRecipe(id: number): Observable<Recipe> 
@@ -57,9 +65,16 @@ export class RecipeService {
     catchError(this.handleError<any>('updateRecipe')));
   }
 /** POST: add a new recipe to the server */
-  addRecipe(recipe:Recipe):Observable<Recipe>{
-    return this.http.post<Recipe>(this.recipesUrl,recipe,httpOptions).pipe(
-      tap((recipe:Recipe) => this.log(`recipe ${recipe.name} are added`)),
+  addRecipe(recipe:Recipe):Observable<Recipe>
+  {
+      return this.http.post<Recipe>(this.recipesUrl,recipe,httpOptions).pipe(
+      tap((recipe:Recipe) => 
+      {
+          recipe.ingredients.forEach(element => {
+          this.ingredientService.addIngredient(element)//add ingredient to data base
+        });
+        this.getItemsCount();//send callback about update recipes quantity
+      }),
       catchError(this.handleError<Recipe>('addRecipe')));
   }
   /** DELETE: delete the recipes from the server */
@@ -68,7 +83,12 @@ export class RecipeService {
     const url = `${this.recipesUrl}/${id}`;
 
     return this.http.delete<Recipe>(url,httpOptions).pipe(
-      tap(_=>this.log(`recipe id=${id} are deleted`)),
+      tap(_=>
+        {
+          this.log(`recipe id=${id} are deleted`);
+          this.getItemsCount();//send callback about update recipes quantity
+        }
+      ),
       catchError(this.handleError<Recipe>('deleteRecipe'))
     );
   }

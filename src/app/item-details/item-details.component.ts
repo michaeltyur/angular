@@ -68,7 +68,7 @@ export class ItemDetailsComponent implements OnInit {
    addNewRecipe(name:string, description:string): void{
     if(!name && !description)
     {
-      this.messageService.add("The fields cannot be empty");
+      console.log("The fields cannot be empty");
       return;
     }
 

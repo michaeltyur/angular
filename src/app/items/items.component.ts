@@ -21,7 +21,7 @@ export class ItemsComponent implements OnInit {
   
   selectedRecipe : Recipe;
 
-  searchStr:string;
+  searchStr:string="";
 
   @Output() cartCountEvent=new EventEmitter();
 
@@ -29,7 +29,6 @@ export class ItemsComponent implements OnInit {
               private searchService:RecipeSearchService,
               private shopItemService:ShopitemService) 
  { 
-   this.searchStr="";
    searchService.stringSearch$.subscribe(res=>this.searchStr=res);
    searchService.recipeSelectEvent$.subscribe(res=>this.selectedRecipe=res);
  }
@@ -38,10 +37,15 @@ export class ItemsComponent implements OnInit {
   {
     this.getRecipes();
   }
+  
   getRecipes():void
   {
     this.recipeService.getListRecipes()
-    .subscribe(recipes=>this.listrecipes=recipes);
+    .subscribe(recipes=>
+        {
+          this.listrecipes=recipes
+        }
+      );
 
   }
   getShopItems():void

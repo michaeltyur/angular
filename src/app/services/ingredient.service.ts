@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
@@ -16,11 +16,19 @@ export class IngredientService {
 
   private ingredientsUrl = 'api/ingredients';  // URL to web api
 
-  constructor(private http: HttpClient) { }
+  itemsCounterEmitter$=new EventEmitter();
+
+  constructor(private http: HttpClient) {
+    this.getItemsCount()
+   }
+  getItemsCount():void{
+    this.getIngredients().then(res=>this.itemsCounterEmitter$.emit(res.length));
+    ;
+  }
 
   getIngredients():Promise<Ingredient[]>{
 
-    return this.http.get<Ingredient[]>(this.ingredientsUrl).toPromise();
+    return this.http.get<Ingredient[]>(this.ingredientsUrl).pipe(tap(complite=>{this.getItemsCount()})).toPromise();
 
   }
 
@@ -50,9 +58,11 @@ export class IngredientService {
          if(!res.find(result=>result.name==item.name))
          {
              promise = this.http.post<Ingredient>(this.ingredientsUrl, item, httpOptions).toPromise();
-         }
-        })   
-        return promise;  
+
+             promise.then(res=>this.getItemsCount());
+            }
+          })   
+          return promise;  
     }
   }
 
@@ -70,7 +80,9 @@ export class IngredientService {
 
       const itemUrl = `${this.ingredientsUrl}/${item.id}`;
 
-      return this.http.delete<Ingredient>(itemUrl, httpOptions).toPromise();
+      let promise= this.http.delete<Ingredient>(itemUrl, httpOptions).toPromise();
+      promise.then(res=>this.getItemsCount());
+      return promise;
     }
   }
 }
