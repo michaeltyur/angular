@@ -3,7 +3,7 @@ import{Location} from '@angular/common'
  
 import{Recipe} from'../shared/models/recipe.model';
 import{RecipeService} from '../services/recipe.service';
-import { MessageService } from '../message.service';
+import { MessageService } from '../services/message.service';
 import{Ingredient} from '../shared/models/ingredient.model'
 import { ItemsComponent } from '../items/items.component';
 

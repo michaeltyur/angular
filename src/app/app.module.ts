@@ -5,7 +5,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import {FormsModule} from '@angular/forms';
 import { HttpClientModule }    from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDataService }  from './in-memory-data.service';
+import { InMemoryDataService }  from './services/in-memory-data.service';
 
 import { ItemsComponent } from './items/items.component';
 import { ItemDetailsComponent } from './item-details/item-details.component';
@@ -19,6 +19,7 @@ import { SearchPipe } from './pipes/search.pipe';
 import { RecipeSearchService } from './services/recipe-search.service';
 import { ShopitemService } from './services/shopitem.service';
 import { RecipeService } from './services/recipe.service';
+import { MessageService } from './services/message.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { RecipeService } from './services/recipe.service';
   providers: [
     RecipeSearchService,
     ShopitemService,
-    RecipeService
+    RecipeService,
+    MessageService
   ],
   bootstrap: [AppComponent] 
 })

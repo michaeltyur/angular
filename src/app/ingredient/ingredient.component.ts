@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import{IngredientService} from '../ingredient.service'
+import{IngredientService} from '../services/ingredient.service'
 import{Ingredient} from '../shared/models/ingredient.model'
 
 @Component({

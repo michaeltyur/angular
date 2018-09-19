@@ -1,7 +1,7 @@
 import { Component, OnInit,Input } from '@angular/core';
 
 import {ShopitemService} from '../services/shopitem.service'
-import {MessageService} from '../message.service'
+import {MessageService} from '../services/message.service'
 import { error } from 'util';
 
 

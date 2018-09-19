@@ -5,7 +5,7 @@ import { catchError, tap, map, filter, find } from 'rxjs/operators';
 
 import { ShopItem } from '../shared/models/shopitem.model'
 import { Ingredient } from '../shared/models/ingredient.model';
-import { IngredientService } from '../ingredient.service';
+import { IngredientService } from './ingredient.service';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

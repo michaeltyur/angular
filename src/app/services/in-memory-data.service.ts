@@ -1,8 +1,8 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 
-import{Recipe} from './shared/models/recipe.model'
-import{Ingredient} from './shared/models/ingredient.model'
-import {ShopItem} from './shared/models/shopitem.model'
+import{Recipe} from '../shared/models/recipe.model'
+import{Ingredient} from '../shared/models/ingredient.model'
+import {ShopItem} from '../shared/models/shopitem.model'
 
 export class InMemoryDataService implements InMemoryDbService {
   createDb() {
