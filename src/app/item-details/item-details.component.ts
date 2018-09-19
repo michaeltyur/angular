@@ -44,13 +44,14 @@ export class ItemDetailsComponent implements OnInit {
     this.recipeChanged.emit(this.recipe);
   }
 
-  updateRecipe(name: string, description: string): void{
+  updateRecipe(name: string, description: string, image:string): void{
      
     //send message to message area
      this.messageService.add("Recipe " + this.recipe.name + " are updated");
 
      this.recipe.name = name;
      this.recipe.description = description;
+     this.recipe.image=image;
 
      if(this.listOfIngredients.length>0)//add ingredients array if not empty
         this.recipe.ingredients =this.listOfIngredients;
@@ -65,14 +66,14 @@ export class ItemDetailsComponent implements OnInit {
 
    }
 
-   addNewRecipe(name:string, description:string): void{
+   addNewRecipe(name:string, description:string, image:string): void{
     if(!name && !description)
     {
       console.log("The fields cannot be empty");
       return;
     }
 
-     this.recipe=new Recipe(name,description,this.listOfIngredients);
+     this.recipe=new Recipe(name, description, this.listOfIngredients, image);
 
      this.recipeService.addRecipe(this.recipe).subscribe();
 

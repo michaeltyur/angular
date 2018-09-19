@@ -9,6 +9,7 @@
               [class.active]="recipe===selectedRecipe"           
               (click)="onSelect(recipe)"
               appHover>
+              <img class="img-thumbnail rounded float-left" src={{recipe.image}} alt="Image">
               <h5>{{recipe.name}}</h5>
               <p class="card-text">Description: {{recipe.description}}</p>
             </li>

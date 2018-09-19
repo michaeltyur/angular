@@ -14,3 +14,7 @@ li{
     transition: 0.5s all;
     z-index: 100;
 }
+.img-thumbnail{
+    width: 200px;
+    margin-right: 10px;
+}
