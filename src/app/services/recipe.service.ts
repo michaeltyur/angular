@@ -24,7 +24,7 @@ export class RecipeService {
     private http: HttpClient,
     private messageService:MessageService,
     private ingredientService:IngredientService) { 
-      
+
       this.getItemsCount();
      }
 
@@ -99,11 +99,12 @@ export class RecipeService {
   searchRecipe(term:string):Observable<Recipe[]>{
     if(!term)return of([]);
 
-    return this.http.get<Recipe[]>(`${this.recipesUrl}/?name=${term}`).pipe(
-      tap(_=>this.log(`found recipes matching ${term}`)),
-      catchError(this.handleError<Recipe[]>('searchRecipe',[]))
-    );
-  }
+    return this.http.get<Recipe[]>(`${this.recipesUrl}/?name=${term}`);
+  //   .pipe(
+  //     tap(_=>this.log(`found recipes matching ${term}`)),
+  //     catchError(this.handleError<Recipe[]>('searchRecipe',[]))
+  //   );
+   }
 
   /**
  * Handle Http operation that failed.

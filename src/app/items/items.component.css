@@ -14,7 +14,11 @@ li{
     transition: 0.5s all;
     z-index: 100;
 }
-.img-thumbnail{
+img{
     width: 200px;
     margin-right: 10px;
+    margin-bottom: 0.75rem;
+}
+.list-group-item{
+    padding-left: 0.75rem;
 }
