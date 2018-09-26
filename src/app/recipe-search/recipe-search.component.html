@@ -21,7 +21,8 @@
                    aria-labelledby="dropdownMenuLink">
               <div *ngFor="let recipe of recipes"
                    class="dropdown-item" 
-                   (click)="onSelect(recipe);searchBox.value=''">{{recipe.name|tomark:searchBox.value}}</div>
+                   (click)="onSelect(recipe);searchBox.value=''"
+                   [innerHTML]="recipe.name | tomark:searchBox.value"></div>
               </div>
         </div>  
       </div>

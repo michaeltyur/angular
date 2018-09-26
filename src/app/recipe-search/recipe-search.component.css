@@ -1,6 +1,11 @@
 .dropdown-menu{
     cursor: pointer;
 }
-.red{
-    color: yellowgreen;
+.search-mark{
+    color: red;
+    padding: 0px;
+}
+mark{
+    background: rgb(212, 87, 87);
+    padding: 0px;
 }
