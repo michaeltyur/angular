@@ -16,6 +16,7 @@ import { RecipeSearchComponent } from './recipe-search/recipe-search.component';
 import { IngredientComponent } from './ingredient/ingredient.component';
 import { HoverDirective } from './directives/hover.directive';
 import { SearchPipe } from './pipes/search.pipe';
+import { TomarkPipe } from './pipes/tomark.pipe';
 import { RecipeSearchService } from './services/recipe-search.service';
 import { ShopitemService } from './services/shopitem.service';
 import { RecipeService } from './services/recipe.service';
@@ -32,7 +33,8 @@ import { MessageService } from './services/message.service';
     RecipeSearchComponent,
     IngredientComponent,
     HoverDirective,
-    SearchPipe
+    SearchPipe,
+    TomarkPipe
   ],
   imports: [
     BrowserModule,

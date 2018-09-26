@@ -19,31 +19,32 @@ export class RecipeSearchComponent implements OnInit {
 
   @Output() recipeSelectEvent = new EventEmitter<Recipe>();
 
-  recipes$: Observable<Recipe[]>;
+  recipes: Recipe[];
 
   searchTerms : Subject<string>;
 
-  //stringSearch$ : EventEmitter<string>;
-  //stringSearch:string;
+  searchStr:string;
 
   constructor(private recipeService:RecipeService,private searchService:RecipeSearchService) { 
 
     this.searchTerms = new Subject<string>();
-    //this.stringSearch$=new EventEmitter<string>(); 
+    this.searchStr="";
   }
 
+  // ngOnInit() {
+  //   this.recipes$ = this.searchTerms.pipe(
+  //     // wait 300ms after each keystroke before considering the term
+  //     debounceTime(300),
+  //     // ignore new term if same as previous term
+  //     distinctUntilChanged(),
+  //     // switch to new search observable each time the term changes
+  //     switchMap((term: string) => this.recipeService.searchRecipe(term)),
+  //   );
+  //   }
   ngOnInit() {
-    this.recipes$ = this.searchTerms.pipe(
-      // wait 300ms after each keystroke before considering the term
-      debounceTime(300),
-      // ignore new term if same as previous term
-      distinctUntilChanged(),
-      // switch to new search observable each time the term changes
-      switchMap((term: string) => this.recipeService.searchRecipe(term)),
-    );
-    
-  }
-
+      this.recipeService.searchRecipe(this.searchStr).subscribe(
+        res=>this.recipes=res);
+    }
   onSelect(recipe:Recipe){
      //this.recipeSelectEvent.emit(recipe);
      this.searchService.search(recipe);
@@ -51,11 +52,20 @@ export class RecipeSearchComponent implements OnInit {
   }
   search(term: string): void 
   {
-    this.searchTerms.next(term);
-  }
+    //this.searchTerms.next(term);
+    if(term&&term.length>1)
+     {
+       this.recipeService.searchRecipe(term).subscribe(res=>
+      {
+        this.recipes = res;
+        //debugger;
+      });
+    } 
+    else this.recipes=[];
+   }
    superSearch(name:string)
    {
-    this.searchService.superSearch(name);
+     this.searchService.superSearch(name);
     //this.stringSearch$.emit(name);
    }
 }

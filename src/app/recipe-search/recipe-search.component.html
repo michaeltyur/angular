@@ -5,7 +5,7 @@
                <h5>Life Search</h5> 
             </div>    
           <div class="dropdown"
-              [class.show]="(recipes$ | async)?.length > 0">
+              [class.show]="recipes && recipes.length > 0">
             <input #searchBox id="dropdownMenuLink" 
                     data-toggle="dropdown" 
                     aria-haspopup="true" 
@@ -15,13 +15,13 @@
                     class="form-control dropdown" 
                     placeholder="Name" 
                     (keyup)="search(searchBox.value)">
-              <div *ngIf="(recipes$ | async)?.length > 0" 
+              <div *ngIf="recipes && recipes.length > 0" 
                    class="dropdown-menu" 
-                   [class.show]="(recipes$ | async)?.length > 0"
+                   [class.show]="recipes && recipes.length > 0"
                    aria-labelledby="dropdownMenuLink">
-              <div *ngFor="let recipe of recipes$ | async"
+              <div *ngFor="let recipe of recipes"
                    class="dropdown-item" 
-                   (click)="onSelect(recipe);searchBox.value=''">{{recipe.name}}</div>
+                   (click)="onSelect(recipe);searchBox.value=''">{{recipe.name|tomark:searchBox.value}}</div>
               </div>
         </div>  
       </div>

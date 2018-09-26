@@ -7,10 +7,12 @@ import{Pipe, PipeTransform,Component} from '@angular/core'
 export class SearchPipe implements PipeTransform
 {
     transform(recipes,value){
+
         let name=value.replace(/^\w/, c => c.toUpperCase());
-        if(recipes&&value)
+
+        if( recipes && value )
         {
-              return recipes.filter(recipe=>{
+            return recipes.filter(recipe=>{
             return recipe.name.includes(name)})
         }
         else return recipes;

@@ -15,13 +15,13 @@ import { RecipeSearchService } from '../services/recipe-search.service';
 })
 export class ItemsComponent implements OnInit {
 
-  listrecipes:Recipe[];
+  listrecipes: Recipe[];
 
-  listShopItems:Ingredient[];
+  listShopItems: Ingredient[];
   
   selectedRecipe : Recipe;
 
-  searchStr:string="";
+  searchStr: string="";
 
   @Output() cartCountEvent=new EventEmitter();
 
