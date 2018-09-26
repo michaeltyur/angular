@@ -18,7 +18,10 @@ const httpOptions = {
 export class RecipeService {
 
   private recipesUrl = 'api/recipes';  // URL to web api
-  itemsCounterEmitter$=new EventEmitter();
+
+  itemsCounterEmitter$ = new EventEmitter();
+
+  recipeUpdatedEmitter$ = new EventEmitter();
 
   constructor(
     private http: HttpClient,
@@ -64,9 +67,15 @@ export class RecipeService {
   /** PUT: update the hero on the server */
   updateRecipe (recipe: Recipe): Observable<any> 
   {
-    return this.http.put(this.recipesUrl, recipe, httpOptions).pipe(
-    tap(_ => this.log(`recipe ${recipe.name} are updated`)),
-    catchError(this.handleError<any>('updateRecipe')));
+    let result= this.http.put(this.recipesUrl, recipe, httpOptions).pipe(
+    tap(_=> 
+    {
+      this.recipeUpdatedEmitter$.emit(recipe);
+      //debugger;
+    }),
+      catchError(this.handleError<Recipe>('updateRecipe')));
+      result.subscribe(res=>this.recipeUpdatedEmitter$.emit(res));
+    return result;
   }
 /** POST: add a new recipe to the server */
   addRecipe(recipe:Recipe):Observable<Recipe>
@@ -74,10 +83,9 @@ export class RecipeService {
       return this.http.post<Recipe>(this.recipesUrl,recipe,httpOptions).pipe(
       tap((recipe:Recipe) => 
       {
-          recipe.ingredients.forEach(element => {
-          this.ingredientService.addIngredient(element)//add ingredient to data base
-        });
-        this.getItemsCount();//send callback about update recipes quantity
+          recipe.ingredients.forEach(element => 
+            this.ingredientService.addIngredient(element))//add ingredient to data base         
+          this.getItemsCount();//send callback about update recipes quantity
       }),
       catchError(this.handleError<Recipe>('addRecipe')));
   }
@@ -102,16 +110,8 @@ export class RecipeService {
   {    
     if(!term)return of([]);
 
-    let test=this.http.get<Recipe[]>(`${this.recipesUrl}/?name=${term}`);
-    let test2;
-    test.subscribe(
-      res=>
-     { 
-       test2=res
-      //debugger;
-      }
-      );
-    return test;
+    return this.http.get<Recipe[]>(`${this.recipesUrl}/?name=${term}`);
+
   }
   searchRecipeByName(str:string):Observable<Recipe[]>
   {    

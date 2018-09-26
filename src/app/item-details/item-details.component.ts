@@ -21,10 +21,6 @@ export class ItemDetailsComponent implements OnInit {
 
   @Input() listOfIngredients:Ingredient[];
 
-  @Output() recipeChanged: EventEmitter<Recipe> = new EventEmitter<Recipe>();
-
-  @Output() listrecipesChange: EventEmitter<Recipe[]> = new EventEmitter<Recipe[]>();
-
   constructor(
               private recipeService:RecipeService,
               private location:Location,
@@ -35,14 +31,6 @@ export class ItemDetailsComponent implements OnInit {
 
   ngOnInit() {}
   
-  listOfRecipesChanged() 
-  {
-    this.listrecipesChange.emit(this.listrecipes);
-  }
-  recipeDidChanged() 
-  {
-    this.recipeChanged.emit(this.recipe);
-  }
 
   updateRecipe(name: string, description: string, image:string): void{
      
@@ -56,13 +44,9 @@ export class ItemDetailsComponent implements OnInit {
      if(this.listOfIngredients.length>0)//add ingredients array if not empty
         this.recipe.ingredients =this.listOfIngredients;
 
-     this.recipeService.updateRecipe(this.recipe).subscribe();
+     this.recipeService.updateRecipe(this.recipe);
 
-     this.listOfRecipesChanged();
-
-     this.recipe = undefined;
-     
-     this.recipeDidChanged() ;
+     this.recipe = undefined;    
 
    }
 
@@ -79,7 +63,7 @@ export class ItemDetailsComponent implements OnInit {
 
      this.listrecipes.push(this.recipe);
      
-     this.listOfRecipesChanged();
+     //this.listOfRecipesChanged();
 
      this.recipe = undefined;
    }
@@ -87,11 +71,9 @@ export class ItemDetailsComponent implements OnInit {
   deleteRecipe():void{
 
      this.listrecipes = this.listrecipes.filter(r => r !== this.recipe);
-     this.recipeService.deleteRecipe(this.recipe).subscribe();
-     this.listOfRecipesChanged();
-     
-     //this.messageService.add("Recipe " + this.recipe.name + " are deleted");
 
+     this.recipeService.deleteRecipe(this.recipe).subscribe();
+     
      this.recipe=undefined;
    }
    goBack():void{
