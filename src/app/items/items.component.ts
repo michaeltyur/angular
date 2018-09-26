@@ -30,7 +30,12 @@ export class ItemsComponent implements OnInit {
               private shopItemService:ShopitemService) 
  { 
    searchService.stringSearch$.subscribe(res=>this.searchStr=res);
-   searchService.recipeSelectEvent$.subscribe(res=>this.selectedRecipe=res);
+   searchService.recipeSelectEvent$.subscribe(res=>
+    {
+      this.selectedRecipe=res;
+     // debugger;
+    }
+    );
  }
 
   ngOnInit() 

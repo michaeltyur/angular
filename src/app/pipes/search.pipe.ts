@@ -8,7 +8,7 @@ export class SearchPipe implements PipeTransform
 {
     transform(recipes,value){
 
-        let name=value.replace(/^\w/, c => c.toUpperCase());
+        let name=value.replace(/^\w/, c => c.toUpperCase());//first alphanumeric character to Upper Case
 
         if( recipes && value )
         {
