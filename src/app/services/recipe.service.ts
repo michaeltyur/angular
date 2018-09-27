@@ -23,6 +23,8 @@ export class RecipeService {
 
   recipeUpdatedEmitter$ = new EventEmitter();
 
+  recipeDeletedEmitter$ = new EventEmitter();
+
   constructor(
     private http: HttpClient,
     private messageService:MessageService,
@@ -70,11 +72,12 @@ export class RecipeService {
     let result= this.http.put(this.recipesUrl, recipe, httpOptions).pipe(
     tap(_=> 
     {
-      this.recipeUpdatedEmitter$.emit(recipe);
-      //debugger;
+      //this.recipeUpdatedEmitter$.emit(recipe);
+      debugger;
     }),
       catchError(this.handleError<Recipe>('updateRecipe')));
-      result.subscribe(res=>this.recipeUpdatedEmitter$.emit(res));
+      this.recipeUpdatedEmitter$.emit(recipe);
+     // result.subscribe(res=>this.recipeUpdatedEmitter$.emit(res));
     return result;
   }
 /** POST: add a new recipe to the server */
@@ -99,6 +102,7 @@ export class RecipeService {
         {
           this.log(`recipe id=${id} are deleted`);
           this.getItemsCount();//send callback about update recipes quantity
+          this.recipeDeletedEmitter$.emit(recipe);
         }
       ),
       catchError(this.handleError<Recipe>('deleteRecipe'))
@@ -138,6 +142,6 @@ export class RecipeService {
   }
    /** Log a HeroService message with the MessageService */
    private log(message: string) {
-    this.messageService.add(`RecipeService: ${message}`);
+    this.messageService.add(`RecipeService: ${message}`,"alert-warning");
   }
 }

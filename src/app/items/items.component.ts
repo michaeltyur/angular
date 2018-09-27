@@ -31,14 +31,14 @@ export class ItemsComponent implements OnInit {
  { 
    searchService.stringSearch$.subscribe(res=>this.searchStr=res);
 
-   searchService.recipeSelectEvent$.subscribe(res=>
-    {
-      this.selectedRecipe=res;
-    });
-      recipeService.recipeUpdatedEmitter$.subscribe(res=>
-      {
-        this.selectedRecipe=undefined;
-      });
+  //search result
+  searchService.recipeSelectEvent$.subscribe(res=>this.selectedRecipe=res);
+
+  //clear selection after updating a recipe
+  recipeService.recipeUpdatedEmitter$.subscribe(res=>this.selectedRecipe=undefined);
+
+  //remove from locale list deleted item without server request 
+  recipeService.recipeDeletedEmitter$.subscribe(res=>this.listrecipes=this.listrecipes.filter(item=>item.id!=res.id));
  }
 
   ngOnInit() 

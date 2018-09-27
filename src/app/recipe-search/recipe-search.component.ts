@@ -4,8 +4,8 @@ import {
   debounceTime, distinctUntilChanged, switchMap
 } from 'rxjs/operators';
 
-import{Recipe} from '../shared/models/recipe.model'
-import {RecipeService} from '../services/recipe.service'
+import { Recipe } from '../shared/models/recipe.model'
+import { RecipeService } from '../services/recipe.service'
 import { RecipeSearchService } from '../services/recipe-search.service';
 
 @Component({
@@ -15,57 +15,56 @@ import { RecipeSearchService } from '../services/recipe-search.service';
 })
 export class RecipeSearchComponent implements OnInit {
 
-  selectedRecipe : Recipe;
+  selectedRecipe: Recipe;
 
   @Output() recipeSelectEvent = new EventEmitter<Recipe>();
 
   recipes: Recipe[];
 
-  searchTerms : Subject<string>;
+  searchTerms: Subject<string>;
 
-  searchStr:string;
+  searchStr0: string;
+  searchStr1: string;
 
-  constructor(private recipeService:RecipeService,private searchService:RecipeSearchService) { 
+  constructor(private recipeService: RecipeService, private searchService: RecipeSearchService) {
 
     this.searchTerms = new Subject<string>();
-    this.searchStr="";
+    this.searchStr0 = "";
+    this.searchStr1 = "";
   }
 
-  // ngOnInit() {
-  //   this.recipes$ = this.searchTerms.pipe(
-  //     // wait 300ms after each keystroke before considering the term
-  //     debounceTime(300),
-  //     // ignore new term if same as previous term
-  //     distinctUntilChanged(),
-  //     // switch to new search observable each time the term changes
-  //     switchMap((term: string) => this.recipeService.searchRecipe(term)),
-  //   );
-  //   }
   ngOnInit() {
-      this.recipeService.searchRecipe(this.searchStr).subscribe(
-        res=>this.recipes=res);
-    }
-  onSelect(recipe:Recipe){
-     //this.recipeSelectEvent.emit(recipe);
-     this.searchService.search(recipe);
-     this.ngOnInit();  
+    //this.search("");
   }
-  search(term: string): void 
+  onSelect(recipe: Recipe) :void
   {
-    //this.searchTerms.next(term);
-    if(term&&term.length>1)
-     {
-       this.recipeService.searchRecipe(term).subscribe(res=>
-      {
-        this.recipes = res;
-        //debugger;
-      });
-    } 
-    else this.recipes=[];
-   }
-   superSearch(name:string)
-   {
-     this.searchService.superSearch(name);
-    //this.stringSearch$.emit(name);
-   }
+
+    this.searchService.search(recipe);
+    this.searchStr0 = "";
+  }
+  search(): void {
+    this.searchStr1 = "";
+    this.superSearch();
+    let term=this.searchStr0;
+    if (term && term.length > 1) {
+      this.recipeService.searchRecipe(term).subscribe(
+        res => 
+        {
+          this.recipes = res;
+          setTimeout(() => { this.clearSearchField(); }, 10000);
+        },
+        err=>console.log('Error Searching Recipe: ', err),
+        ()=>console.log('Search Recipe was complete'));
+    }
+    else this.recipes = [];
+  }
+  superSearch():void {
+    let name = this.searchStr1;
+    this.searchService.superSearch(name);
+  }
+
+  clearSearchField():void{
+    this.recipes = [];
+    this.searchStr0 = "";
+  }
 }

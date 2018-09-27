@@ -12,8 +12,8 @@ export class RecipeSearchService{
   
     stringSearch$ : EventEmitter<string>;
 
-    constructor(){
-
+    constructor()
+    {
         this.recipeSelectEvent$ = new EventEmitter();
         this.stringSearch$=new EventEmitter<string>(); 
     }

@@ -4,6 +4,7 @@ import { error } from 'util';
 import {ShopitemService} from '../services/shopitem.service';
 import {IngredientService} from '../services/ingredient.service';
 import {RecipeService} from '../services/recipe.service';
+import {MessageService} from '../services/message.service';
 
 
 @Component({
@@ -18,23 +19,26 @@ export class NavbarComponent implements OnInit {
   shopListCount:number=0;
   recipesCount:number=0;
   ingredientsCount:number=0;
+  alertStr:string;
+  isMessageShow:boolean;
 
   constructor(private shopItemService:ShopitemService,
               private ingredientService:IngredientService,
-              private recipeService:RecipeService) 
+              private recipeService:RecipeService,
+              private messageService:MessageService) 
   {
 
     this.current = "Recipes";
   
     recipeService.itemsCounterEmitter$.subscribe(count => this.recipesCount=count);
-    shopItemService.countChanged$.subscribe(count => 
-                                            {
-                                               this.shopListCount=count
-                                            });
-    ingredientService.itemsCounterEmitter$.subscribe(count => 
-                                                     {
-                                                       this.ingredientsCount=count
-                                                     });
+    shopItemService.countChanged$.subscribe(count =>this.shopListCount=count);
+    ingredientService.itemsCounterEmitter$.subscribe(count =>this.ingredientsCount=count);
+    messageService.alertMsgEmitter$.subscribe(res=>
+      {
+        this.alertStr=res;
+        this.isMessageShow=true;
+        this.messageHide();
+      });
     
   }
   
@@ -48,5 +52,7 @@ export class NavbarComponent implements OnInit {
    this.current = selected;
 
   }
-  
+  messageHide():void{
+    setTimeout(() => { this.isMessageShow=false; }, 5000);
+  }
 }

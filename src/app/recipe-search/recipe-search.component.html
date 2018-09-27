@@ -14,7 +14,8 @@
                     class="dropdown-toggle" 
                     class="form-control dropdown" 
                     placeholder="Name" 
-                    (keyup)="search(searchBox.value)">
+                    (keyup)="search()"
+                    [(ngModel)]="searchStr0">
               <div *ngIf="recipes && recipes.length > 0" 
                    class="dropdown-menu" 
                    [class.show]="recipes && recipes.length > 0"
@@ -36,7 +37,8 @@
                     type="text"
                     class="form-control" 
                     placeholder="Name" 
-                    (keyup)="superSearch(searchBox2.value)"> 
+                    (keyup)="superSearch()"
+                    [(ngModel)]="searchStr1"> 
       </div>
     </div>
   </div>

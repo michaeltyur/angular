@@ -29,6 +29,8 @@
        </a>
   </li>
     </ul>
+    <div class="alert-container" *ngIf="isMessageShow" role="alert" [innerHTML]="alertStr">
+    </div>
   </div>
 </div>
 </nav>
