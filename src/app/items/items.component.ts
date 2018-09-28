@@ -74,19 +74,18 @@ export class ItemsComponent implements OnInit {
 
     let item;
 
-    for (let index = 0; index < this.selectedRecipe.ingredients.length; index++) {
-
+    for (let index = 0; index < this.selectedRecipe.ingredients.length; index++) 
+    {
       const element = this.selectedRecipe.ingredients[index];
 
-      this.shopItemService.addShopItem(new ShopItem(element,1));
-      
+      this.shopItemService.addShopItem(new ShopItem(element,1));  
     }
 
     this.getShopCouter();
 
   }
-  getShopCouter():void{
+  getShopCouter():void
+  {
      this.shopItemService.getShopItemsQuantity();  
-
   }
 };
