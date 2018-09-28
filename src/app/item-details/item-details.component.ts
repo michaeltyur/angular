@@ -35,7 +35,7 @@ export class ItemDetailsComponent implements OnInit {
   updateRecipe(name: string, description: string, image:string): void{
      
     //send message to message area
-     this.messageService.add("Recipe " + this.recipe.name + " are updated","alert-success");
+    // this.messageService.add("Recipe " + this.recipe.name + " are updated","alert-success");
     
     this.recipe.name = name;
      this.recipe.description = description;
@@ -54,12 +54,12 @@ export class ItemDetailsComponent implements OnInit {
     if(!name && !description)
     {
       //send message to message area
-      this.messageService.add("The fields name and description are requared","alert-success");
+     // this.messageService.add("The fields name and description are requared","alert-success");
       console.log("The fields cannot be empty");
       return;
     }
 
-     this.messageService.add("Recipe are added","alert-success");
+    // this.messageService.add("Recipe are added","alert-success");
 
      this.recipe=new Recipe(name, description, this.listOfIngredients, image);
 
@@ -74,7 +74,7 @@ export class ItemDetailsComponent implements OnInit {
 
   deleteRecipe():void{
 
-     this.messageService.add("Recipe are deleted","alert-danger");
+     //this.messageService.add("Recipe are deleted","alert-danger");
 
      this.listrecipes = this.listrecipes.filter(r => r !== this.recipe);
 
@@ -100,8 +100,8 @@ export class ItemDetailsComponent implements OnInit {
      {
        this.recipe.ingredients.splice(index, 1);
       }
-     let msg= 'Ingredient '+name+' are removed';
-     this.messageService.add(msg,"alert-danger");
+     //let msg= 'Ingredient '+name+' are removed';
+     //this.messageService.add(msg,"alert-danger");
    }
    onKey(text:string,item:Ingredient):void{
     item.name=text;

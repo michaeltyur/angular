@@ -50,7 +50,7 @@ export class RecipeService {
   {
     const url = `${this.recipesUrl}/${id}`;
     return this.http.get<Recipe>(url).pipe(
-      tap(_ => this.log(`fetched recipe id=${id}`)),
+      tap(_ => {}),
       catchError(this.handleError<Recipe>(`getRecipe id=${id}`)));
   }
     /** GET hero by id. Return `undefined` when id not found */

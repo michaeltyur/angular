@@ -7,7 +7,8 @@
           #recipesLink
           id="recipesLink"
           (click)="onSelect('Recipes')"
-          [class.active]="current=='Recipes'">
+          [class.active]="current=='Recipes'"
+          appHover>
            <a class="nav-link" routerLink="/recipes">Recipes
              <span class="badge badge-primary badge-pill">{{recipesCount}}</span>
            </a>
@@ -15,7 +16,8 @@
       <li class="nav-item ml-3"
           #shopItemsLink
           (click)="onSelect('ShopList')"
-          [class.active]="current=='ShopList'">
+          [class.active]="current=='ShopList'"
+          appHover>
            <a class="nav-link" routerLink="/shopinglist">Shopping List
              <span class="badge badge-primary badge-pill">{{shopListCount}}</span>
            </a>
@@ -24,7 +26,8 @@
       #ingredientsLink
       (click)="onSelect('Ingredients')"
       [class.active]="current=='Ingredients'">
-       <a class="nav-link" routerLink="/ingredients">Ingredients
+       <a class="nav-link" routerLink="/ingredients"
+       appHover>Ingredients
          <span class="badge badge-primary badge-pill">{{ingredientsCount}}</span>
        </a>
   </li>

@@ -13,6 +13,16 @@ li{
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     transition: 0.5s all;
     z-index: 100;
+    border-radius: 5px;
+    animation-name: recipe-animation;
+    animation-duration: 0.2s;
+    animation-iteration-count: 1;
+}
+@keyframes recipe-animation {
+    0%   {transform: rotate(0deg);}
+    33%  {transform: rotate(3deg);}
+    66% {transform: rotate(-3deg);}
+    100% {transform: rotate(0deg);}
 }
 img{
     width: 200px;
