@@ -33,24 +33,24 @@ export class RecipeService {
       this.getItemsCount();
      }
 
-    getItemsCount():void{
-
+    getItemsCount():void
+    {
       this.getListRecipes().subscribe(res=> this.itemsCounterEmitter$.emit(res.length));
     }
     
 
   getListRecipes():Observable<Recipe[]>
   {
-   let recipes= this.http.get<Recipe[]>(this.recipesUrl);
-   recipes.subscribe(res=>this.getItemsCount());
-   return recipes;
+    let recipes= this.http.get<Recipe[]>(this.recipesUrl);
+    recipes.subscribe(res=>this.getItemsCount());
+    return recipes;
   }
   /** GET hero by id. Will 404 if id not found */
   getRecipe(id: number): Observable<Recipe> 
   {
     const url = `${this.recipesUrl}/${id}`;
     return this.http.get<Recipe>(url).pipe(
-      tap(_ => this.log(`fetched recipe id=${id}`)),
+      tap(_ => {}),
       catchError(this.handleError<Recipe>(`getRecipe id=${id}`)));
   }
     /** GET hero by id. Return `undefined` when id not found */
@@ -87,7 +87,8 @@ export class RecipeService {
       tap((recipe:Recipe) => 
       {
           recipe.ingredients.forEach(element => 
-            this.ingredientService.addIngredient(element))//add ingredient to data base         
+            this.ingredientService.addIngredient(element))//add ingredient to data base 
+            this.messageService.add("recipe are added","alert-success");        
           this.getItemsCount();//send callback about update recipes quantity
       }),
       catchError(this.handleError<Recipe>('addRecipe')));
@@ -100,7 +101,7 @@ export class RecipeService {
     return this.http.delete<Recipe>(url,httpOptions).pipe(
       tap(_=>
         {
-          this.log(`recipe id=${id} are deleted`);
+          this.log(`recipe are deleted`,"alert-danger");
           this.getItemsCount();//send callback about update recipes quantity
           this.recipeDeletedEmitter$.emit(recipe);
         }
@@ -135,13 +136,14 @@ export class RecipeService {
     console.error(error); // log to console instead
  
     // TODO: better job of transforming error for user consumption
-    this.log(`${operation} failed: ${error.message}`);
+    this.log(`${operation} failed: ${error.message}`,"alert-warning");
  
     // Let the app keep running by returning an empty result.
     return of(result as T);};
   }
    /** Log a HeroService message with the MessageService */
-   private log(message: string) {
-    this.messageService.add(`RecipeService: ${message}`,"alert-warning");
-  }
+    private log(message: string,typeAlert:string) 
+    {
+      this.messageService.add( message, typeAlert);
+    }
 }
