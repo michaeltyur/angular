@@ -32,3 +32,10 @@ img{
 .list-group-item{
     padding-left: 0.75rem;
 }
+footer {
+    clear: both;
+    position: relative;
+    z-index: 10;
+    height: 3em;
+    margin-top: -3em;
+}

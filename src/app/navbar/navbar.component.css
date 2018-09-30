@@ -1,7 +1,23 @@
-.alert-container{
-    margin-left: 20rem;
+
+.alert{
+    margin-left: 5rem;
     margin-top: 0;
     margin-bottom: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    visibility: hidden;
+    /* transition: width 4s, height 4s all; */
+    /* animation-iteration-count: 1;    */
+}
+.alert-action{   
+    animation-name: alert-animation;
+    animation-duration: 3s;
+}
+
+@keyframes alert-animation {
+    0%   {top:0px;left:0px;transform: scale(1);visibility: visible; opacity:1;}
+    50%  {top:50px;left:250px;transform: scale(2); visibility: visible; opacity: 0.5;transform: rotate(15deg)}
+    100% {top:-100px;left:500px;transform: scale(3); visibility: visible; opacity: 0.1;transform: rotate(-15deg)}
 }
 .hovered{
     transform: scale(1.05);

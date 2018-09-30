@@ -35,9 +35,10 @@ export class NavbarComponent implements OnInit {
     ingredientService.itemsCounterEmitter$.subscribe(count =>this.ingredientsCount=count);
     messageService.alertMsgEmitter$.subscribe(res=>
       {
+       
         this.alertStr=res;
         this.isMessageShow=true;
-        this.messageHide();
+        this.messageHideShow();
       });
     
   }
@@ -52,7 +53,7 @@ export class NavbarComponent implements OnInit {
    this.current = selected;
 
   }
-  messageHide():void{
-    setTimeout(() => { this.isMessageShow=false; }, 5000);
+  messageHideShow():void{
+    setTimeout(() => { this.isMessageShow=false; }, 3000);    
   }
 }

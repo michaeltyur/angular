@@ -15,8 +15,9 @@ constructor(private sanitizer: DomSanitizer){
   add(message: string, alert: string) 
   {
     
-    this.message=`<div class="alert ${alert}" style="padding-top:5px;padding-bottom:5px;margin-top:0;margin-bottom:0"> ${message} </div>`;
-    this.alertMsgEmitter$.emit(this.sanitizer.bypassSecurityTrustHtml(this.message));
+    //this.message=`<div class="alert ${alert}" role="alert" style="padding-top:5px;padding-bottom:5px;margin-top:0;margin-bottom:0"> ${message} </div>`;
+    //this.alertMsgEmitter$.emit(this.sanitizer.bypassSecurityTrustHtml(this.message));
+    this.alertMsgEmitter$.emit(message);
   }
  
   clear() {

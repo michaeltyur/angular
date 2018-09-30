@@ -32,7 +32,8 @@
        </a>
   </li>
     </ul>
-    <div class="alert-container" *ngIf="isMessageShow" role="alert" [innerHTML]="alertStr">
+    <div class="alert alert-danger" role="alert" ng [ngClass]="{'alert-action': isMessageShow}">
+      {{alertStr}}
     </div>
   </div>
 </div>

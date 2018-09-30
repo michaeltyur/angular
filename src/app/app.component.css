@@ -1,3 +1,15 @@
+html,
+body {
+   margin:0;
+   padding:0;
+   height:100%;
+}
+body {
+    padding-bottom: 6rem;
+    min-height: 100%;
+    position: relative;
+    margin: 0;
+ }
 li{
     cursor:pointer;
 }
@@ -11,6 +23,6 @@ img{
     width: 50px;
     height: 50px;
 }
-footer{
-    min-width: 70px;
-}
+
+
+    
