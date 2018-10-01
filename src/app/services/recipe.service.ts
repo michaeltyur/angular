@@ -69,29 +69,41 @@ export class RecipeService {
   /** PUT: update the hero on the server */
   updateRecipe (recipe: Recipe): Observable<any> 
   {
-    let result= this.http.put(this.recipesUrl, recipe, httpOptions).pipe(
-    tap(_=> 
+    return this.http.put(this.recipesUrl, recipe, httpOptions).pipe(
+    tap(
+      (next)=> {}),
+     (error)=>{
+      this.messageService.add("an error has occurred", "alert-warning");
+      console.log(error);
+      return error;
+    },
+    (complete)=>
     {
-      //this.recipeUpdatedEmitter$.emit(recipe);
-      debugger;
-    }),
-      catchError(this.handleError<Recipe>('updateRecipe')));
-      this.recipeUpdatedEmitter$.emit(recipe);
-     // result.subscribe(res=>this.recipeUpdatedEmitter$.emit(res));
-    return result;
+      this.messageService.add("Recipe are updated", "alert-success");
+      return complete;
+    });    
   }
 /** POST: add a new recipe to the server */
   addRecipe(recipe:Recipe):Observable<Recipe>
   {
       return this.http.post<Recipe>(this.recipesUrl,recipe,httpOptions).pipe(
-      tap((recipe:Recipe) => 
-      {
-          recipe.ingredients.forEach(element => 
-            this.ingredientService.addIngredient(element))//add ingredient to data base 
-            this.messageService.add("recipe are added","alert-success");        
-          this.getItemsCount();//send callback about update recipes quantity
-      }),
-      catchError(this.handleError<Recipe>('addRecipe')));
+      tap(
+        (_recipe) => 
+       {
+          _recipe.ingredients.forEach(
+            (element) => 
+            this.ingredientService.addIngredient(element));//add ingredient to data base            
+          }),
+          (error)=>{ 
+            this.messageService.add("an error has occurred", "alert-warning");
+            console.log(error) ;
+            return error;
+          },
+            (complite)=>{
+              this.messageService.add("Recipe are added", "alert-success");
+              this.getItemsCount();//send callback about update recipes quantity
+              return complite;
+        });
   }
   /** DELETE: delete the recipes from the server */
   deleteRecipe(recipe:Recipe | number):Observable<Recipe>{
@@ -99,15 +111,18 @@ export class RecipeService {
     const url = `${this.recipesUrl}/${id}`;
 
     return this.http.delete<Recipe>(url,httpOptions).pipe(
-      tap(_=>
+      tap((next)=>
         {
-          this.log(`recipe are deleted`,"alert-danger");
           this.getItemsCount();//send callback about update recipes quantity
           this.recipeDeletedEmitter$.emit(recipe);
         }
       ),
-      catchError(this.handleError<Recipe>('deleteRecipe'))
-    );
+      error=>{ 
+        this.messageService.add("an error has occurred", "alert-warning");
+        return error},
+      complite=>{
+        this.messageService.add("Recipe are deleted", "alert-danger");
+        return complite});
   }
 
   /* GET recipe whose name contains search term */

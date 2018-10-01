@@ -20,6 +20,7 @@ export class NavbarComponent implements OnInit {
   recipesCount:number=0;
   ingredientsCount:number=0;
   alertStr:string;
+  alertType:string;
   isMessageShow:boolean;
 
   constructor(private shopItemService:ShopitemService,
@@ -36,7 +37,8 @@ export class NavbarComponent implements OnInit {
     messageService.alertMsgEmitter$.subscribe(res=>
       {
        
-        this.alertStr=res;
+        this.alertStr=res.message;
+        this.alertType=res.alert;
         this.isMessageShow=true;
         this.messageHideShow();
       });

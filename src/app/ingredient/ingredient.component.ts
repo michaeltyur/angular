@@ -1,6 +1,7 @@
 import { Component, OnInit , EventEmitter} from '@angular/core';
 
 import{IngredientService} from '../services/ingredient.service'
+
 import{Ingredient} from '../shared/models/ingredient.model'
 
 @Component({
@@ -27,4 +28,5 @@ export class IngredientComponent implements OnInit {
   onSelected(item:Ingredient):void{
      this.selectedItem=item;
   }
+
 }

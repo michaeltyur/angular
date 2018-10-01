@@ -32,7 +32,12 @@
        </a>
   </li>
     </ul>
-    <div class="alert alert-danger" role="alert" ng [ngClass]="{'alert-action': isMessageShow}">
+    <div class="alert" 
+         role="alert" 
+         [ngClass]="{'alert-action':isMessageShow,
+                     'alert-success':alertType==='alert-success',
+                     'alert-danger':alertType==='alert-danger',
+                     'alert-warning':alertType==='alert-warning'}">
       {{alertStr}}
     </div>
   </div>

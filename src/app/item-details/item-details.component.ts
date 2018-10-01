@@ -1,10 +1,12 @@
-import { Component, OnInit, Input, Output,EventEmitter, DoCheck } from '@angular/core';
-import{Location} from '@angular/common'
- 
-import{Recipe} from'../shared/models/recipe.model';
-import{RecipeService} from '../services/recipe.service';
+import { Component, OnInit, Input, Output, EventEmitter, DoCheck } from '@angular/core';
+import { Location } from '@angular/common'
+
+//services
+import { RecipeService } from '../services/recipe.service';
 import { MessageService } from '../services/message.service';
-import{Ingredient} from '../shared/models/ingredient.model'
+
+import { Recipe } from '../shared/models/recipe.model';
+import { Ingredient } from '../shared/models/ingredient.model'
 import { ItemsComponent } from '../items/items.component';
 
 
@@ -19,92 +21,95 @@ export class ItemDetailsComponent implements OnInit {
 
   @Input() listrecipes: Recipe[];
 
-  @Input() listOfIngredients:Ingredient[];
+  @Input() listOfIngredients: Ingredient[];
 
   constructor(
-              private recipeService:RecipeService,
-              private location:Location,
-              private messageService: MessageService) {
+    private recipeService: RecipeService,
+    private location: Location,
+    private messageService: MessageService) {
 
-    this.listOfIngredients=[];
+    this.listOfIngredients = [];
   }
 
-  ngOnInit() {}
-  
+  ngOnInit() { }
 
-  updateRecipe(name: string, description: string, image:string): void{
-     
-    //send message to message area
-    // this.messageService.add("Recipe " + this.recipe.name + " are updated","alert-success");
-    
+
+  updateRecipe(name: string, description: string, image: string): void {
+
     this.recipe.name = name;
-     this.recipe.description = description;
-     this.recipe.image=image;
+    this.recipe.description = description;
+    this.recipe.image = image;
 
-     if(this.listOfIngredients.length>0)//add ingredients array if not empty
-        this.recipe.ingredients =this.listOfIngredients;
+    if (this.listOfIngredients.length > 0)//add ingredients array if not empty
+      this.recipe.ingredients = this.listOfIngredients;
 
-     this.recipeService.updateRecipe(this.recipe);
+    this.recipeService.updateRecipe(this.recipe).subscribe();
+      // (success) => {
+      //   this.messageService.add("Recipe are updated", "alert-success");
+      //   this.recipe = undefined;
+      // },
+      // (error) => {
+      //   this.messageService.add("an error has occurred", "alert-warning");
+      //   console.log(error);
+      // });
+  }
 
-     this.recipe = undefined;    
+  addNewRecipe(name: string, description: string, image: string): void {
 
-   }
-
-   addNewRecipe(name:string, description:string, image:string): void{
-    if(!name && !description)
-    {
+    if (!name && !description) {
       //send message to message area
-     // this.messageService.add("The fields name and description are requared","alert-success");
+      this.messageService.add("The fields cannot be empty", "alert-warning");
       console.log("The fields cannot be empty");
       return;
     }
 
-    // this.messageService.add("Recipe are added","alert-success");
+    this.recipe = new Recipe(name, description, this.listOfIngredients, image);
 
-     this.recipe=new Recipe(name, description, this.listOfIngredients, image);
+    this.recipeService.addRecipe(this.recipe).subscribe();
+      // (success) => {
+      //   this.messageService.add("Recipe are added", "alert-success");
+      //   this.listrecipes.push(this.recipe);
+      //   this.recipe = undefined;
+      // },
+      // (error) => {
+      //   this.messageService.add("an error has occurred", "alert-warning");
+      //   console.log(error);
+      // });
+  }
 
-     this.recipeService.addRecipe(this.recipe).subscribe();
+  deleteRecipe(): void {
 
-     this.listrecipes.push(this.recipe);
-     
-     //this.listOfRecipesChanged();
+    
 
-     this.recipe = undefined;
-   }
+    this.recipeService.deleteRecipe(this.recipe).subscribe(
+      (success) => {
+        this.listrecipes = this.listrecipes.filter(r => r !== this.recipe);
+        this.recipe = undefined;
+      },
+      (error) => {});
 
-  deleteRecipe():void{
+  }
 
-     //this.messageService.add("Recipe are deleted","alert-danger");
+  goBack(): void {
+    this.location.back();
+  }
 
-     this.listrecipes = this.listrecipes.filter(r => r !== this.recipe);
-
-     this.recipeService.deleteRecipe(this.recipe).subscribe();
-     
-     this.recipe=undefined;
-   }
-   goBack():void{
-     this.location.back();
-   }
-   addIngredient():void{
-    if(!this.recipe)
+  addIngredient(): void {
+    if (!this.recipe)
       this.listOfIngredients.push(new Ingredient(''));
-      else this.recipe.ingredients.push(new Ingredient(''));
-   }
-   removeIngredient(index,name:string){
+    else this.recipe.ingredients.push(new Ingredient(''));
+  }
+  removeIngredient(index, name: string) {
 
-     if(this.listOfIngredients.length>0)
-     {
-         this.listOfIngredients.splice(index, 1);
-     }
-     else 
-     {
-       this.recipe.ingredients.splice(index, 1);
-      }
-     //let msg= 'Ingredient '+name+' are removed';
-     //this.messageService.add(msg,"alert-danger");
-   }
-   onKey(text:string,item:Ingredient):void{
-    item.name=text;
-   }
+    if (this.listOfIngredients.length > 0) {
+      this.listOfIngredients.splice(index, 1);
+    }
+    else {
+      this.recipe.ingredients.splice(index, 1);
+    }
+  }
+  onKey(text: string, item: Ingredient): void {
+    item.name = text;
+  }
 }
 

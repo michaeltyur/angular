@@ -3,6 +3,8 @@ import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, map, tap } from 'rxjs/operators';
 
+import { MessageService } from '../services/message.service';
+
 import { Ingredient } from '../shared/models/ingredient.model';
 
 const httpOptions = {
@@ -18,7 +20,8 @@ export class IngredientService {
 
   itemsCounterEmitter$=new EventEmitter();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient,
+              private messageService:MessageService) {
     this.getItemsCount()
    }
   getItemsCount():void{
@@ -57,12 +60,22 @@ export class IngredientService {
        this.http.get<Ingredient[]>(this.ingredientsUrl).subscribe(res=>{
          if(!res.find(result=>result.name==item.name))
          {
-             promise = this.http.post<Ingredient>(this.ingredientsUrl, item, httpOptions).toPromise();
-
-             promise.then(res=>this.getItemsCount());
+          promise = this.http.post<Ingredient>(this.ingredientsUrl, item, httpOptions).pipe(
+               tap(
+                 next=>{
+                         this.messageService.add("Ingredient "+next.name+" are added","alert-success");
+                  },
+                 error=> {
+                           this.messageService.add("an error has occurred","alert-warning")
+                         },
+                 ()=>{                            //success
+                             this.getItemsCount();                            
+                            } 
+               )).toPromise();         
+              
             }
           })   
-          return promise;  
+         return promise;
     }
   }
 
@@ -84,5 +97,9 @@ export class IngredientService {
       promise.then(res=>this.getItemsCount());
       return promise;
     }
+  }
+  private sendMessage(message: string,typeAlert:string) 
+  {
+    this.messageService.add( message, typeAlert);
   }
 }
