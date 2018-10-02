@@ -1,26 +1,33 @@
 import { Injectable,EventEmitter } from '@angular/core';
 import {BrowserModule, DomSanitizer} from '@angular/platform-browser'
+import { Observable, of } from 'rxjs';
+
+import { Message} from '../shared/models/message';
 
  
 @Injectable({
   providedIn: 'root',
 })
 export class MessageService {
-constructor(private sanitizer: DomSanitizer){
 
-}
-  message:string;
+  message:Message;
+
   alertMsgEmitter$ = new EventEmitter();
+
+ constructor(private sanitizer: DomSanitizer){}
+
  
   add(message: string, alert: string) 
   {
-    
-    //this.message=`<div class="alert ${alert}" role="alert" style="padding-top:5px;padding-bottom:5px;margin-top:0;margin-bottom:0"> ${message} </div>`;
-    //this.alertMsgEmitter$.emit(this.sanitizer.bypassSecurityTrustHtml(this.message));
-    this.alertMsgEmitter$.emit({message,alert});
+     this.message=new Message(message,alert);
+     this.alertMsgEmitter$.emit(this.message);
   }
- 
-  clear() {
-    this.message = "";
-  }
+  // async sendToLessener()
+  // {
+  //   await setTimeout(() => {      
+  //     let tmpMsg=this.message;
+  //   }, 1000);
+      
+  // }
+
 }

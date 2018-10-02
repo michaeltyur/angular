@@ -34,11 +34,12 @@
     </ul>
     <div class="alert" 
          role="alert" 
-         [ngClass]="{'alert-action':isMessageShow,
-                     'alert-success':alertType==='alert-success',
-                     'alert-danger':alertType==='alert-danger',
-                     'alert-warning':alertType==='alert-warning'}">
-      {{alertStr}}
+         *ngFor="let item of messages"
+         [ngClass]="{'alert-action':item.isMessageShow,
+                     'alert-success':item.type==='alert-success',
+                     'alert-danger':item.type==='alert-danger',
+                     'alert-warning':item.type==='alert-warning'}">
+      {{item.message}}
     </div>
   </div>
 </div>

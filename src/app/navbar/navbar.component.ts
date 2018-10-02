@@ -6,6 +6,7 @@ import {IngredientService} from '../services/ingredient.service';
 import {RecipeService} from '../services/recipe.service';
 import {MessageService} from '../services/message.service';
 
+import {Message} from '../shared/models/message';
 
 @Component({
   selector: 'app-navbar',
@@ -19,8 +20,9 @@ export class NavbarComponent implements OnInit {
   shopListCount:number=0;
   recipesCount:number=0;
   ingredientsCount:number=0;
-  alertStr:string;
-  alertType:string;
+
+  messages:Message[]=[];
+
   isMessageShow:boolean;
 
   constructor(private shopItemService:ShopitemService,
@@ -35,20 +37,15 @@ export class NavbarComponent implements OnInit {
     shopItemService.countChanged$.subscribe(count =>this.shopListCount=count);
     ingredientService.itemsCounterEmitter$.subscribe(count =>this.ingredientsCount=count);
     messageService.alertMsgEmitter$.subscribe(res=>
-      {
-       
-        this.alertStr=res.message;
-        this.alertType=res.alert;
-        this.isMessageShow=true;
-        this.messageHideShow();
+      {      
+        this.messages.push(res);
+        // this.isMessageShow=true;
+        this. messagesAction();
       });
     
   }
   
-  ngOnInit() 
-  {
-    //this.shopItemService.getShopItemsQuantity().subscribe(shopItemsCount=>this.shopListCount=shopItemsCount);
-  }
+  ngOnInit()  {}
 
   onSelect(selected: string): void {
 
@@ -57,5 +54,19 @@ export class NavbarComponent implements OnInit {
   }
   messageHideShow():void{
     setTimeout(() => { this.isMessageShow=false; }, 3000);    
+  }
+  async messagesAction(){
+  //  await this.messages.forEach( msg=> 
+  //  {
+  //    msg.isMessageShow=true;
+  //    setTimeout(() => {  msg.isMessageShow=false; }, 3000); 
+  //    wait(1000);
+  //  });
+   this.messages.forEach(function (msg, index) {
+    setTimeout(function () {
+      msg.isMessageShow=true;
+      setTimeout(() => {  msg.isMessageShow=false; }, 3000); 
+    }, index * 1000);
+  });
   }
 }
