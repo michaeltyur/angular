@@ -22,12 +22,4 @@ export class MessageService {
      this.message=new Message(message,alert);
      this.alertMsgEmitter$.emit(this.message);
   }
-  // async sendToLessener()
-  // {
-  //   await setTimeout(() => {      
-  //     let tmpMsg=this.message;
-  //   }, 1000);
-      
-  // }
-
 }

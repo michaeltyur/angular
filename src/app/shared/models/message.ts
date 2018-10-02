@@ -7,5 +7,6 @@ export class Message
    constructor(msg:string,type:string){
        this.message=msg;
        this.type=type;
+       this.isMessageShow=false;
    }
 }

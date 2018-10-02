@@ -35,10 +35,10 @@
     <div class="alert" 
          role="alert" 
          *ngFor="let item of messages"
-         [ngClass]="{'alert-action':item.isMessageShow,
-                     'alert-success':item.type==='alert-success',
-                     'alert-danger':item.type==='alert-danger',
-                     'alert-warning':item.type==='alert-warning'}">
+         [ngClass]="{'alert-action':item && item.isMessageShow,
+                     'alert-success':item.type === 'alert-success',
+                     'alert-danger':item.type === 'alert-danger',
+                     'alert-warning':item.type === 'alert-warning'}">
       {{item.message}}
     </div>
   </div>

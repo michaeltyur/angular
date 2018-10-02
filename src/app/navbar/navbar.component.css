@@ -5,9 +5,11 @@
     margin-bottom: 0;
     padding-top: 5px;
     padding-bottom: 5px;
-    visibility: visible;
+    visibility: hidden;
     transform: scale(1);
-    /* position: absolute; */
+    position: absolute;
+    left: 45%;
+    top:10px;
     /* transition: width 4s, height 4s all; */
     /* animation-iteration-count: 1;    */
 }
@@ -18,18 +20,18 @@
     -webkit-animation-duration: 3s;
 }
 @-webkit-keyframes alert-animation {
-    0%   {top:0px;left:0px;}
-    45%  {top:50px;left:250px;  visibility: visible; opacity: 0.7;transform: rotate(0deg) scale(1.5);}
-    50%  {top:50px;left:250px;  visibility: visible; opacity: 0.7;transform: rotate(10deg) scale(1.5);}
-    55%  {top:50px;left:250px;  visibility: visible; opacity: 0.7;transform: rotate(-10deg) scale(1.5);}
-    100% {top:-100px;left:500px;  visibility: visible; opacity: 0.1;transform: rotate(10deg) scale(0.5);}
+    0%   {top:50px;left:45%;}
+    45%  {top:50px;left:60%;  visibility: visible; opacity: 0.7;transform: rotate(0deg) scale(1.5);}
+    50%  {top:50px;left:60%;  visibility: visible; opacity: 0.7;transform: rotate(10deg) scale(1.5);}
+    55%  {top:50px;left:60%;  visibility: visible; opacity: 0.7;transform: rotate(-10deg) scale(1.5);}
+    100% {top:-100px;left:80%;  visibility: visible; opacity: 0.1;transform: rotate(10deg) scale(0.5);}
 }
 @keyframes alert-animation {
-    0%   {top:0px;left:0px;}
-    45%  {top:50px;left:250px;  visibility: visible; opacity: 0.7;transform: rotate(0deg) scale(1.5);}
-    50%  {top:50px;left:250px;  visibility: visible; opacity: 0.7;transform: rotate(10deg) scale(1.5);}
-    55%  {top:50px;left:250px;  visibility: visible; opacity: 0.7;transform: rotate(-10deg) scale(1.5);}
-    100% {top:-100px;left:500px;  visibility: visible; opacity: 0.1;transform: rotate(10deg) scale(0.5);}
+    0%   {top:0px;left:45%;}
+    45%  {top:50px;left:60%;  visibility: visible; opacity: 0.7;transform: rotate(0deg) scale(1.5);}
+    50%  {top:50px;left:60%;  visibility: visible; opacity: 0.7;transform: rotate(10deg) scale(1.5);}
+    55%  {top:50px;left:60%;  visibility: visible; opacity: 0.7;transform: rotate(-10deg) scale(1.5);}
+    100% {top:-100px;left:80%;  visibility: visible; opacity: 0.1;transform: rotate(10deg) scale(0.5);}
 }
 .hovered{
     transform: scale(1.05);
