@@ -55,9 +55,11 @@ export class NavbarComponent implements OnInit {
   }
   async messagesAction() {
 
-     for (let index = 0; index < this.messages.length; index++) {
+      for (let index = 0; index < this.messages.length; index++) {
+
       const msg = this.messages[index];
-      if(msg&&!msg.isMessageShow){
+      
+      if(msg && !msg.isMessageShow){
         setTimeout(()=>
         {
           msg.isMessageShow = true;

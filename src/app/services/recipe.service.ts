@@ -111,14 +111,15 @@ export class RecipeService {
     const url = `${this.recipesUrl}/${id}`;
 
     return this.http.delete<Recipe>(url,httpOptions).pipe(
-      tap((next)=>
+      tap((res:Recipe)=>
         {
           this.getItemsCount();//send callback about update recipes quantity
           this.recipeDeletedEmitter$.emit(recipe);
         }
       ),
       error=>{ 
-        this.messageService.add("an error has occurred", "alert-warning");
+        //this.messageService.add("an error has occurred", "alert-warning");
+        console.log(error);
         return error},
       complite=>{
         this.messageService.add("Recipe are deleted", "alert-danger");

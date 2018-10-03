@@ -66,7 +66,8 @@ export class IngredientService {
                          this.messageService.add("Ingredient "+next.name+" are added","alert-success");
                   },
                  error=> {
-                           this.messageService.add("an error has occurred","alert-warning")
+                           this.messageService.add("an error has occurred","alert-warning");
+                           console.log(error);
                          },
                  ()=>{                            //success
                              this.getItemsCount();                            
