@@ -65,7 +65,8 @@ export class ItemDetailsComponent implements OnInit {
 
     this.recipe = new Recipe(name, description, this.listOfIngredients, image);
 
-    this.recipeService.addRecipe(this.recipe).subscribe();
+    this.recipeService.addRecipe(this.recipe).subscribe(res=>this.listrecipes.push(res));
+
       // (success) => {
       //   this.messageService.add("Recipe are added", "alert-success");
       //   this.listrecipes.push(this.recipe);

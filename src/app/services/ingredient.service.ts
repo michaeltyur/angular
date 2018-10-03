@@ -26,7 +26,6 @@ export class IngredientService {
    }
   getItemsCount():void{
     this.getIngredients().then(res=>this.itemsCounterEmitter$.emit(res.length));
-    ;
   }
 
   getIngredients():Promise<Ingredient[]>{

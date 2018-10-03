@@ -45,7 +45,7 @@ export class RecipeService {
     recipes.subscribe(res=>this.getItemsCount());
     return recipes;
   }
-  /** GET hero by id. Will 404 if id not found */
+ 
   getRecipe(id: number): Observable<Recipe> 
   {
     const url = `${this.recipesUrl}/${id}`;
@@ -73,7 +73,7 @@ export class RecipeService {
     tap(
       (next)=> {}),
      (error)=>{
-      this.messageService.add("an error has occurred", "alert-warning");
+      //this.messageService.add("an error has occurred", "alert-warning");
       console.log(error);
       return error;
     },
@@ -95,7 +95,7 @@ export class RecipeService {
             this.ingredientService.addIngredient(element));//add ingredient to data base            
           }),
           (error)=>{ 
-            this.messageService.add("an error has occurred", "alert-warning");
+           // this.messageService.add("an error has occurred", "alert-warning");
             console.log(error) ;
             return error;
           },
