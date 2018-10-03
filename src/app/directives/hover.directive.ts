@@ -5,6 +5,7 @@ import{Directive, HostBinding, HostListener} from '@angular/core'
 })
 
 export class HoverDirective{
+  
   @HostBinding ('class.hovered') isHovered = false;
 
   @HostListener ('mouseenter') onmouseenter(){
