@@ -88,15 +88,20 @@ export class IngredientService {
     }
   }
 
-  deleteIngredient(item:Ingredient):Promise<Ingredient>{
+  removeIngredient(item:Ingredient):Promise<Ingredient>{
 
     if (item) {
 
       const itemUrl = `${this.ingredientsUrl}/${item.id}`;
 
-      let promise= this.http.delete<Ingredient>(itemUrl, httpOptions).toPromise();
-      promise.then(res=>this.getItemsCount());
-      return promise;
+      return this.http.delete<Ingredient>(itemUrl, httpOptions).pipe(tap(
+        next=>{},
+        error=>{},
+        ()=>{
+              this.messageService.add("service=>The Ingredient is deleted","alert-danger")
+              this.getItemsCount();
+            }))
+            .toPromise();
     }
   }
   private sendMessage(message: string,typeAlert:string) 

@@ -27,8 +27,10 @@ export class IngredientComponent implements OnInit {
      this.ingredientService.getIngredients().then(res=>this.ingredients=res);
   }
   removeItem(item:Ingredient):void{
-    this.ingredientService.deleteIngredient(item).then(
-      ()=>{this.messageService.add("The Ingredient is aded","alert-succes")},
+    this.ingredientService.removeIngredient(item).then(
+      ()=>{
+        this.ingredients=this.ingredients.filter(res=>item!=res);
+      },
       (rejected)=>{}
     ).catch(error=>console.error(error));
     
