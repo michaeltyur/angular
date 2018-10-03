@@ -67,20 +67,9 @@ export class ItemDetailsComponent implements OnInit {
 
     this.recipeService.addRecipe(this.recipe).subscribe(res=>this.listrecipes.push(res));
 
-      // (success) => {
-      //   this.messageService.add("Recipe are added", "alert-success");
-      //   this.listrecipes.push(this.recipe);
-      //   this.recipe = undefined;
-      // },
-      // (error) => {
-      //   this.messageService.add("an error has occurred", "alert-warning");
-      //   console.log(error);
-      // });
   }
 
   deleteRecipe(): void {
-
-    
 
     this.recipeService.deleteRecipe(this.recipe).subscribe(
       (success) => {
