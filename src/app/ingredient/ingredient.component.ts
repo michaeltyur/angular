@@ -1,6 +1,7 @@
 import { Component, OnInit , EventEmitter} from '@angular/core';
 
 import{IngredientService} from '../services/ingredient.service'
+import{MessageService} from '../services/message.service'
 
 import{Ingredient} from '../shared/models/ingredient.model'
 
@@ -15,7 +16,8 @@ export class IngredientComponent implements OnInit {
 
   selectedItem:Ingredient;
 
-  constructor(private ingredientService:IngredientService) { }
+  constructor(private  ingredientService:IngredientService,
+               private messageService: MessageService) { }
 
   ngOnInit() {
     this.getAllIngredients();
@@ -24,7 +26,13 @@ export class IngredientComponent implements OnInit {
   getAllIngredients():void{
      this.ingredientService.getIngredients().then(res=>this.ingredients=res);
   }
-
+  removeItem(item:Ingredient):void{
+    this.ingredientService.deleteIngredient(item).then(
+      ()=>{this.messageService.add("The Ingredient is aded","alert-succes")},
+      (rejected)=>{}
+    ).catch(error=>console.error(error));
+    
+  }
   onSelected(item:Ingredient):void{
      this.selectedItem=item;
   }

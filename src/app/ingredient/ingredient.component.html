@@ -6,8 +6,15 @@
         <li class="list-group-item list-group-item-action" 
             *ngFor="let item of ingredients"
              appHover>
-          <h5 class="mb-1 text-capitalize">{{item.name}}</h5> 
-          <p class="mb-1">{{item.description?item.description:"Not Description"}}</p>
+             <div class="row">
+                 <div class="col-10">
+                     <h5 class="mb-1 text-capitalize">{{item.name}}</h5> 
+                     <p class="mb-1">{{item.description?item.description:"Not Description"}}</p>
+                 </div>
+                 <div class="col-2">
+                        <button class="btn btn-secondary" type="button" (click)="removeItem(shopItem)">Remove</button>
+                 </div>  
+             </div>
         </li>
   </ul>
 </div>
