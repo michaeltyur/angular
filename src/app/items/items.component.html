@@ -10,7 +10,7 @@
               (click)="onSelect(recipe)"
               appHover>
               <img class="rounded float-left" src={{recipe.image}} alt="Image">
-              <h5>{{recipe.name}}</h5>
+              <h5 [innerHTML]="recipe.name | tomark:searchStr"></h5>
               <p class="card-text">Description: {{recipe.description}}</p>
             </li>
           </ul>
