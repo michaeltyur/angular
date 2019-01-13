@@ -1,6 +1,9 @@
-# recipes angular 6 project
+#angular 6 project
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.3.
+## The working version can be seen by clicking on the link:
+https://recipes-5e4ea.firebaseapp.com
+
+##After downloading run `npm install` to install the missing packages
 
 ## Development server
 
