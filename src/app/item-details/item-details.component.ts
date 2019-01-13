@@ -44,14 +44,7 @@ export class ItemDetailsComponent implements OnInit {
       this.recipe.ingredients = this.listOfIngredients;
 
     this.recipeService.updateRecipe(this.recipe).subscribe();
-      // (success) => {
-      //   this.messageService.add("Recipe are updated", "alert-success");
-      //   this.recipe = undefined;
-      // },
-      // (error) => {
-      //   this.messageService.add("an error has occurred", "alert-warning");
-      //   console.log(error);
-      // });
+
   }
 
   addNewRecipe(name: string, description: string, image: string): void {

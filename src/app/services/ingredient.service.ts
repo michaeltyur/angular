@@ -16,7 +16,7 @@ const httpOptions = {
 })
 export class IngredientService {
 
-  private ingredientsUrl = 'api/ingredients';  // URL to web api
+  private ingredientsUrl = 'api/ingredients'; 
 
   itemsCounterEmitter$=new EventEmitter();
 

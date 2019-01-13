@@ -9,7 +9,6 @@ import { RecipeSearchService } from '../services/recipe-search.service';
 
 @Component({
   selector: 'app-items',
-  template: `{{recipedetails}}`,
   templateUrl: './items.component.html',
   styleUrls: ['./items.component.css']  
 })
